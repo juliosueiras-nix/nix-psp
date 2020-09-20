@@ -1,4 +1,4 @@
-{ stdenv, fetchTarball, ... }:
+{ stdenv, fetchTarball, fetchurl, ... }:
 
 let 
   BINUTILS_VERSION = "2.23.2";

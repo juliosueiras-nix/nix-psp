@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchTarball, binutils, file, callPackage, ... }:
+{ stdenv, lib, fetchTarball, fetchurl, binutils, file, callPackage, ... }:
 
 let
   GCC_VERSION = "9.3.0";
