@@ -1,8 +1,8 @@
-{ stdenv, lib, fetchTarball, fetchurl, binutils, file, callPackage, ... }:
+{ stdenv, lib, fetchurl, binutils, file, ... }:
 
 let
   GCC_VERSION = "9.3.0";
-  gccDepsLibs = callPackage ./libs.nix {};
+  gccDepsLibs = import ./libs.nix;
 
 in stdenv.mkDerivation {
   name = "psp-gcc";

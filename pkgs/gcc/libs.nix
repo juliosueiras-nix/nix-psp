@@ -1,5 +1,3 @@
-{ fetchTarball, ... }:
-
 let
   GMP_VERSION = "6.1.2";
   MPC_VERSION = "1.1.0";
