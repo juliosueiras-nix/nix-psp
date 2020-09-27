@@ -23,5 +23,7 @@ in stdenv.mkDerivation {
       sha256 = "FV10md1l1JbsB23HHZPbnAwvnN8/quhnHZaWdTRr9Mk=";
     })
   ];
+
+  dontDisableStatic = true;
 }
 

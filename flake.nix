@@ -24,6 +24,14 @@
           pspsdkLib = self.packages.x86_64-linux.psptoolchain.stage1.pspsdk;
         };
       };
+
+      stage2 = {
+        gcc = pkgs.callPackage ./pkgs/gcc/stage2.nix { 
+          binutils = self.packages.x86_64-linux.psptoolchain.binutils;
+          stage1gcc = self.packages.x86_64-linux.psptoolchain.stage1.gcc;
+          newlib = self.packages.x86_64-linux.psptoolchain.stage1.newlib;
+        };
+      };
     };
 
     hydraJobs = {

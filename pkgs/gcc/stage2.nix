@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchurl, binutils, file, ... }:
+{ stdenv, lib, fetchurl, binutils, stage1gcc, newlib, file, ... }:
 
 let
   GCC_VERSION = "9.3.0";
@@ -23,10 +23,11 @@ in stdenv.mkDerivation {
     "--target=psp"
     "--enable-lto"
     "--with-newlib"
-    "--without-headers"
-    "--disable-libssp"
-    "--enable-languages=c"
+    "--enable-languages=c,c++"
+    "--enable-cxx-flags=-G0"
   ];
+
+  CFLAGS = "-I${newlib}/include";
 
   preConfigure = ''
     ln -fs ${gccDepsLibs.gmpLib} gmp
@@ -46,7 +47,11 @@ in stdenv.mkDerivation {
     })
   ];
 
-  dontDisableStatic = true;
+  CFLAGS_FOR_TARGET = "-G0";
+
+  CC = "${stage1gcc}/bin/psp-gcc";
 
   hardeningDisable = [ "format" ];
+
+  enableParallelBuilding = true;
 }
