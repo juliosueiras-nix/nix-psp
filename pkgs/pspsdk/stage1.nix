@@ -25,8 +25,6 @@ stdenv.mkDerivation {
 
   buildPhase = ''
     make install-data
-    mv $out/psp/sdk/* $out/
-    rm -rf $out/psp
   '';
 
   dontInstall = true;

@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchurl, binutils, stage1gcc, newlib, file, ... }:
+{ stdenv, lib, fetchurl, binutils, stage1gcc, pspsdkLib, newlib, file, ... }:
 
 let
   GCC_VERSION = "9.3.0";
@@ -27,9 +27,13 @@ in stdenv.mkDerivation {
     "--enable-cxx-flags=-G0"
   ];
 
-  CFLAGS = "-I${newlib}/include";
-
   preConfigure = ''
+    mkdir -p $out
+    cp -a ${newlib}/* $out/
+    chmod -R +w $out/
+    cp -a ${pspsdkLib}/* $out/
+    chmod -R +w $out/
+
     ln -fs ${gccDepsLibs.gmpLib} gmp
     ln -fs ${gccDepsLibs.mpcLib} mpc
     ln -fs ${gccDepsLibs.mpfrLib} mpfr
@@ -46,10 +50,6 @@ in stdenv.mkDerivation {
       sha256 = "f3etsCyDAP9aYTBiKAFTQJY+M7SaQXcteiZZItc6n+w=";
     })
   ];
-
-  CFLAGS_FOR_TARGET = "-G0";
-
-  CC = "${stage1gcc}/bin/psp-gcc";
 
   hardeningDisable = [ "format" ];
 

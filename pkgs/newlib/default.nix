@@ -26,7 +26,9 @@ stdenv.mkDerivation {
   ];
 
   preConfigure = ''
-    export CFLAGS="-I${pspsdkLib}/include"
+    mkdir -p $out/psp
+    cp -a ${pspsdkLib}/psp/* $out/psp
+    chmod -R +w $out/psp/sdk
     mkdir build-psp
     cd build-psp
   '';
@@ -34,7 +36,6 @@ stdenv.mkDerivation {
   dontDisableStatic = true;
 
   postInstall = ''
-    mv $out/psp/* $out/
-    rm -rf $out/psp
+    rm -rf $out/psp/sdk
   '';
 }
