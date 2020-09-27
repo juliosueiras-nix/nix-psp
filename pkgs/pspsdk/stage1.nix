@@ -1,10 +1,6 @@
 { stdenv, lib, autoreconfHook, which, stage1gcc, binutils, fetchFromGitHub, file, ... }:
 
-let
-  GCC_VERSION = "9.3.0";
-  gccDepsLibs = import ./libs.nix;
-
-in stdenv.mkDerivation {
+stdenv.mkDerivation {
   name = "psp-sdk";
 
   src = fetchFromGitHub {
@@ -29,6 +25,8 @@ in stdenv.mkDerivation {
 
   buildPhase = ''
     make install-data
+    mv $out/psp/sdk/* $out/
+    rm -rf $out/psp
   '';
 
   dontInstall = true;

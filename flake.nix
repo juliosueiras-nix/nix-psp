@@ -17,6 +17,12 @@
           stage1gcc = self.packages.x86_64-linux.psptoolchain.stage1.gcc;
           binutils = self.packages.x86_64-linux.psptoolchain.binutils;
         };
+
+        newlib = pkgs.callPackage ./pkgs/newlib/default.nix {
+          binutils = self.packages.x86_64-linux.psptoolchain.binutils;
+          stage1gcc = self.packages.x86_64-linux.psptoolchain.stage1.gcc;
+          pspsdkLib = self.packages.x86_64-linux.psptoolchain.stage1.pspsdk;
+        };
       };
     };
 
