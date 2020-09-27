@@ -12,6 +12,11 @@
         gcc = pkgs.callPackage ./pkgs/gcc/stage1.nix { 
           binutils = self.packages.x86_64-linux.psptoolchain.binutils;
         };
+
+        pspsdk = pkgs.callPackage ./pkgs/pspsdk/stage1.nix {
+          stage1gcc = self.packages.x86_64-linux.psptoolchain.stage1.gcc;
+          binutils = self.packages.x86_64-linux.psptoolchain.binutils;
+        };
       };
     };
 
