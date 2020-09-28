@@ -18,6 +18,8 @@ stdenv.mkDerivation {
     "--with-pspdev=$(out)"
   ];
 
+  makeFlags = [ "all" "install" ];
+
   preConfigure = ''
     mkdir -p $out/
     cp -a ${stage2gcc}/* $out/

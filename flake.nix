@@ -8,6 +8,7 @@
   in {
     packages.x86_64-linux.psptoolchain = {
       binutils = pkgs.callPackage ./pkgs/binutils/default.nix {};
+
       stage1 = {
         gcc = pkgs.callPackage ./pkgs/gcc/stage1.nix { 
           binutils = self.packages.x86_64-linux.psptoolchain.binutils;
@@ -39,9 +40,24 @@
         };
       };
 
-      gdb = pkgs.callPackage ./pkgs/gdb/default.nix {
-        binutils = self.packages.x86_64-linux.psptoolchain.binutils;
-        pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
+      debug = {
+        gdb = pkgs.callPackage ./pkgs/gdb/default.nix {
+          binutils = self.packages.x86_64-linux.psptoolchain.binutils;
+          pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
+        };
+
+        # Skipping for now
+        #insight = pkgs.callPackage ./pkgs/insight/default.nix {
+        #  binutils = self.packages.x86_64-linux.psptoolchain.binutils;
+        #  pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
+        #};
+      };
+
+      tools = {
+        psplinkusb = pkgs.callPackage ./pkgs/psplinkusb/default.nix {
+          binutils = self.packages.x86_64-linux.psptoolchain.binutils;
+          pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
+        };
       };
     };
 
