@@ -32,6 +32,16 @@
           newlib = self.packages.x86_64-linux.psptoolchain.stage1.newlib;
           pspsdkLib = self.packages.x86_64-linux.psptoolchain.stage1.pspsdk;
         };
+
+        pspsdk = pkgs.callPackage ./pkgs/pspsdk/stage2.nix { 
+          binutils = self.packages.x86_64-linux.psptoolchain.binutils;
+          stage2gcc = self.packages.x86_64-linux.psptoolchain.stage2.gcc;
+        };
+      };
+
+      gdb = pkgs.callPackage ./pkgs/gdb/default.nix {
+        binutils = self.packages.x86_64-linux.psptoolchain.binutils;
+        pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
       };
     };
 

@@ -41,7 +41,7 @@ in stdenv.mkDerivation {
   patches = [
     (fetchurl {
       url =
-        "https://raw.githubusercontent.com/pspdev/psptoolchain/master/patches/gcc-${GCC_VERSION}-PSP.patch";
+        "https://raw.githubusercontent.com/pspdev/psptoolchain/bffc9c7ad096965813df3ad90620f43343805fd6/patches/gcc-${GCC_VERSION}-PSP.patch";
       sha256 = "f3etsCyDAP9aYTBiKAFTQJY+M7SaQXcteiZZItc6n+w=";
     })
   ];
