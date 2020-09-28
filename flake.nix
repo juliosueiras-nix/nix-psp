@@ -58,6 +58,15 @@
           binutils = self.packages.x86_64-linux.psptoolchain.binutils;
           pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
         };
+
+        ebootsigner = pkgs.callPackage ./pkgs/ebootsigner/default.nix {
+          pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
+        };
+
+        psp-pkgconf = pkgs.callPackage ./pkgs/psp-pkgconf/default.nix {
+          binutils = self.packages.x86_64-linux.psptoolchain.binutils;
+          pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
+        };
       };
     };
 

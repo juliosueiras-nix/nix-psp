@@ -1,4 +1,4 @@
-{ stdenv, autoPatchelfHook, lib, which, pspsdk, binutils, texinfo4, fetchFromGitHub, readline, ncurses, libusb, libusb1, file, ... }:
+{ stdenv, lib, which, pspsdk, binutils, texinfo4, fetchFromGitHub, readline, ncurses, libusb, file, ... }:
 
 stdenv.mkDerivation {
   name = "psplinkusb";
@@ -11,9 +11,7 @@ stdenv.mkDerivation {
     sha256 = "PGEwA3KYYksAuG7AMJVbqHbwE6dIMO2WnGnnUEiln04=";
   };
 
-  buildInputs = [ file texinfo4 pspsdk binutils readline ncurses libusb.dev libusb1.dev autoPatchelfHook ];
-
-  PREFIX = "$out";
+  buildInputs = [ file texinfo4 pspsdk binutils readline ncurses libusb ];
 
   patchPhase = ''
     find . -name "Makefile" -exec sed -i "s|PREFIX=.*|PREFIX=$out|g" {} \; -exec sed -i 's|lcurses|lncurses|g' {} \;
