@@ -43,7 +43,7 @@ in stdenv.mkDerivation {
 
   dontDisableStatic = true;
   dontStrip = true;
-  hardeningDisable = [ "format" ];
+  hardeningDisable = [ "all" ];
 }
 
 

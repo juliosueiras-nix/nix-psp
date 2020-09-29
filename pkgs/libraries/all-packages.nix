@@ -5,6 +5,10 @@ rec {
     inherit pspsdk;
   };
 
+  pspgl = callPackage ./pspgl/default.nix {
+    inherit pspsdk;
+  };
+
   SDL = callPackage ./SDL/default.nix {
     inherit pspsdk pspirkeyb;
   };
