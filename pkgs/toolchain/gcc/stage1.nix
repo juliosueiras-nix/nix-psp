@@ -47,6 +47,6 @@ in stdenv.mkDerivation {
   ];
 
   dontDisableStatic = true;
-
-  hardeningDisable = [ "format" ];
+  dontStrip = true;
+  hardeningDisable = [ "all" ];
 }

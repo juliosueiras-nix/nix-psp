@@ -24,6 +24,8 @@ in stdenv.mkDerivation {
     })
   ];
 
+  dontStrip = true;
   dontDisableStatic = true;
+  hardeningDisable = [ "all" ];
 }
 

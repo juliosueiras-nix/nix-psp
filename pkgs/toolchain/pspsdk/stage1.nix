@@ -29,4 +29,6 @@ stdenv.mkDerivation {
 
   dontInstall = true;
   dontDisableStatic = true;
+  dontStrip = true;
+  hardeningDisable = [ "all" ];
 }

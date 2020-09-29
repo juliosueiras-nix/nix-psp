@@ -1,8 +1,8 @@
-{ stdenv, fetchurl, pspsdk, ... }:
+{ stdenvNoCC, gcc_multi, fetchurl, pspsdk, ... }:
 
 let
   SQLITE_VERSION = "26778480";
-in stdenv {
+in stdenvNoCC.mkDerivation {
   name = "sqlite";
 
   src = fetchurl {
@@ -10,18 +10,21 @@ in stdenv {
     sha256 = "AnA/0H5QUP9ifSfiOgMTpKgojXoua0Z4+Jm1OxYoalA=";
   };
 
-  buildInputs = [ pspsdk ];
+  buildInputs = [ pspsdk gcc_multi ];
+
+  PSPDEV = "${pspsdk}";
 
   configureScript = "../configure";
 
-  LDFLAGS ="-L$(psp-config --pspsdk-path)/lib -lc -lpspuser";
-  CFLAGS ="-DSQLITE_OS_OTHER=1 -DSQLITE_OS_PSP=1 -I$(psp-config --pspsdk-path)/include";
 
   preConfigure = ''
+    export LDFLAGS="-L${gcc_multi.cc.lib}/lib -L${pspsdk}/psp/lib -L${pspsdk}/psp/sdk/lib -lc -lpspuser";
+    export CFLAGS="-DSQLITE_OS_OTHER=1 -DSQLITE_OS_PSP=1 -I${pspsdk}/psp/sdk/include";
     mkdir build-ppu && cd build-ppu
   '';
 
   configureFlags = [
+    "--build=x86_64-unknown-linux-gnu"
     "--host=psp" 
     "--disable-readline" 
     "--disable-tcl"
@@ -35,6 +38,8 @@ in stdenv {
       sha256 = "IynK/hZHAVcjWq5SDVdyFqcml9Dk1yvepI7Gb6tLXlk=";
     })
   ];
+
+  dontDisableStatic = true;
+
+  hardeningDisable = [ "all" ];
 }
-
-

@@ -34,6 +34,8 @@ stdenv.mkDerivation {
   '';
 
   dontDisableStatic = true;
+  dontStrip = true;
+  hardeningDisable = [ "all" ];
 
   postInstall = ''
     rm -rf $out/psp/sdk

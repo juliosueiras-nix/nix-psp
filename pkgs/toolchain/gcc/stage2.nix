@@ -51,9 +51,9 @@ in stdenv.mkDerivation {
     })
   ];
 
-  hardeningDisable = [ "format" ];
-
   dontDisableStatic = true;
+  dontStrip = true;
+  hardeningDisable = [ "all" ];
 
   enableParallelBuilding = true;
 }
