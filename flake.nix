@@ -71,8 +71,11 @@
     };
 
     hydraJobs = {
-      build = self.packages.x86_64-linux.psptoolchain;
-      test = pkgs.vim;
+      channel = pkgs.releaseTools.channel {
+        constituents = [ self.packages.x86_64-linux.psptoolchain ];
+        name = "psp-channel";
+        src = ./.;
+      };
     };
   };
 }
