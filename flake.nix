@@ -69,10 +69,10 @@
         };
       };
 
-      libraries = pkgs.callPackage ./pkgs/libraries/all-packages.nix {
-        binutils = self.packages.x86_64-linux.psptoolchain.binutils;
-        pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
-      };
+      #libraries = pkgs.callPackage ./pkgs/libraries/all-packages.nix {
+      #  binutils = self.packages.x86_64-linux.psptoolchain.binutils;
+      #  pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
+      #};
     };
 
     hydraJobs = {
