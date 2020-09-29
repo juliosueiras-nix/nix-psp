@@ -75,7 +75,7 @@
     };
 
     hydraJobs = {
-      build = self.packages.x86_64-linux.psptoolchain;
+      build = pkgs.lib.hydraJob self.packages.x86_64-linux.psptoolchain;
     };
   };
 }
