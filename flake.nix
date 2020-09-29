@@ -72,6 +72,7 @@
 
     hydraJobs = {
       build = self.packages.x86_64-linux.psptoolchain;
+      test = pkgs.vim;
     };
   };
 }
