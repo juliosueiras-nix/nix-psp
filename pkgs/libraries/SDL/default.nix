@@ -1,8 +1,8 @@
-{ stdenvNoCC, autoconf, gcc, libtool, fetchurl, pspsdk, ... }:
+{ stdenv, pspirkeyb, autoconf, gcc, libtool, fetchurl, pspsdk, ... }:
 
 let
   SDL_VERSION = "1.2.15";
-in stdenvNoCC.mkDerivation {
+in stdenv.mkDerivation {
   name = "SDL";
 
   src = fetchurl {
@@ -26,6 +26,7 @@ in stdenvNoCC.mkDerivation {
     cat acinclude/* >aclocal.m4
     autoconf
     export LDFLAGS="-L${pspsdk}/lib -L${pspsdk}/psp/sdk/lib -L${pspsdk}/psp/lib -lc -lpspuser"
+    export CFLAGS="-I${pspirkeyb}/include"
     export LIBS="-lc -lpspuser"
   '';
 
@@ -41,6 +42,7 @@ in stdenvNoCC.mkDerivation {
   ];
 
   dontDisableStatic = true;
+  dontStrip = true;
   hardeningDisable = [ "format" ];
 }
 

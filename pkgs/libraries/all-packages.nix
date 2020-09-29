@@ -1,8 +1,12 @@
 { callPackage, pspsdk, ... }:
 
-{
-  SDL = callPackage ./SDL/default.nix {
+rec {
+  pspirkeyb = callPackage ./pspirkeyb/default.nix {
     inherit pspsdk;
+  };
+
+  SDL = callPackage ./SDL/default.nix {
+    inherit pspsdk pspirkeyb;
   };
 
   bzip2 = callPackage ./bzip2/default.nix {
