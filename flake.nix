@@ -69,13 +69,17 @@
         };
       };
 
-      libraries = pkgs.callPackage ./pkgs/libraries/all-packages.nix {
-        pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
-      };
+    };
+
+    packages.x86_64-linux.libraries = pkgs.callPackage ./pkgs/libraries/all-packages.nix {
+      pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
     };
 
     hydraJobs = {
-      build = pkgs.lib.hydraJob self.packages.x86_64-linux.psptoolchain;
+      build = {
+        psptoolchain = self.packages.x86_64-linux.psptoolchain;
+        libraries = self.packages.x86_64-linux.libraries;
+      };
     };
   };
 }
