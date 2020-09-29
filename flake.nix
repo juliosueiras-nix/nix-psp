@@ -71,8 +71,9 @@
     };
 
     hydraJobs = {
+      build = self.packages.x86_64-linux.psptoolchain;
       channel = pkgs.releaseTools.channel {
-        constituents = [ self.packages.x86_64-linux.psptoolchain ];
+        constituents = [ self.packages.x86_64-linux.psptoolchain.stage2.pspsdk ];
         name = "psp-channel";
         src = ./.;
       };
