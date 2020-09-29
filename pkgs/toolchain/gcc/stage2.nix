@@ -53,5 +53,7 @@ in stdenv.mkDerivation {
 
   hardeningDisable = [ "format" ];
 
+  dontDisableStatic = true;
+
   enableParallelBuilding = true;
 }

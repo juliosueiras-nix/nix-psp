@@ -28,4 +28,5 @@ stdenv.mkDerivation {
   '';
 
   dontInstall = true;
+  dontDisableStatic = true;
 }

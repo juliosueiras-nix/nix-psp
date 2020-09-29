@@ -22,6 +22,8 @@ stdenv.mkDerivation {
 
   preConfigure = ''
     mkdir -p $out/
+    cp -a ${binutils}/* $out/
+    chmod -R +w $out/
     cp -a ${stage2gcc}/* $out/
     chmod -R +w $out/
     mkdir build-psp
@@ -29,4 +31,5 @@ stdenv.mkDerivation {
   '';
 
   dontInstall = true;
+  dontDisableStatic = true;
 }

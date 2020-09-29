@@ -1,8 +1,8 @@
-{ stdenv, autogen, fetchurl, pspsdk, binutils, ... }:
+{ stdenvNoCC, autoconf, gcc, libtool, fetchurl, pspsdk, ... }:
 
 let
   SDL_VERSION = "1.2.15";
-in stdenv.mkDerivation {
+in stdenvNoCC.mkDerivation {
   name = "SDL";
 
   src = fetchurl {
@@ -10,15 +10,24 @@ in stdenv.mkDerivation {
     sha256 = "1tMWp5Pl40gVXw3ZO5eXmJM/uYqh7evMEIgp1kdKrQA=";
   };
 
-  buildInputs = [ autogen pspsdk binutils ];
+  buildInputs = [ libtool autoconf pspsdk gcc ];
+
+  PSPSDK = "${pspsdk}/psp/sdk";
+  PSPDEV = "${pspsdk}";
 
   configureFlags = [
     "--enable-pspirkeyb"
     "--host=psp"
   ];
 
-  LDFLAGS = "-lc -lpspuser";
-  LIBS="-lc -lpspuser";
+  preConfigure = ''
+    unset CC
+    unset CXX
+    cat acinclude/* >aclocal.m4
+    autoconf
+    export LDFLAGS="-L${pspsdk}/lib -L${pspsdk}/psp/sdk/lib -L${pspsdk}/psp/lib -lc -lpspuser"
+    export LIBS="-lc -lpspuser"
+  '';
 
   patches = [
     (fetchurl {
@@ -30,6 +39,9 @@ in stdenv.mkDerivation {
       sha256 = "mmOVuGYrByuL+B0U+AI1hHVh5UrD9IxxtlCOIgiItU8=";
     })
   ];
+
+  dontDisableStatic = true;
+  hardeningDisable = [ "format" ];
 }
 
 
