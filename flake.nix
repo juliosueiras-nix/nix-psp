@@ -83,7 +83,7 @@
       build = {
         psptoolchain = self.packages.x86_64-linux.psptoolchain;
         libraries = builtins.removeAttrs self.packages.x86_64-linux.libraries [ "override" "overrideDerivation" ];
-        homebrew = self.packages.x86_64-linux.homebrew;
+        homebrew = builtins.removeAttrs self.packages.x86_64-linux.homebrew [ "override" "overrideDerivation" ];
       };
     };
   };
