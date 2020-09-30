@@ -32,11 +32,11 @@ in stdenv.mkDerivation {
 
   patches = [
     (fetchurl {
-      url = "https://raw.githubusercontent.com/pspdev/psplibraries/2bd5631f2d9154a26dc09bd07ca979f8685c1d29/patches/SDL-${SDL_VERSION}-PSP.patch";
+      url = "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/SDL-${SDL_VERSION}-PSP.patch";
       sha256 = "yXwNuyqfOFvNnlYxSMGbiGY4UERr4T1Vs6or1tH+Cn0=";
     })
     (fetchurl {
-      url = "https://raw.githubusercontent.com/pspdev/psplibraries/2bd5631f2d9154a26dc09bd07ca979f8685c1d29/patches/SDL_glfuncs.h.patch";
+      url = "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/SDL_glfuncs.h.patch";
       sha256 = "mmOVuGYrByuL+B0U+AI1hHVh5UrD9IxxtlCOIgiItU8=";
     })
   ];

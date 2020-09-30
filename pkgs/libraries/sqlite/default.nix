@@ -36,7 +36,7 @@ in stdenv.mkDerivation {
 
   patches = [
     (fetchurl {
-      url = "https://raw.githubusercontent.com/pspdev/psplibraries/2bd5631f2d9154a26dc09bd07ca979f8685c1d29/patches/sqlite-3.7.3-PSP.patch";
+      url = "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/sqlite-3.7.3-PSP.patch";
       sha256 = "IynK/hZHAVcjWq5SDVdyFqcml9Dk1yvepI7Gb6tLXlk=";
     })
   ];

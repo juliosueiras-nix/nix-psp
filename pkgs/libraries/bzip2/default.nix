@@ -14,7 +14,7 @@ in stdenv.mkDerivation {
 
   patches = [
     (fetchurl {
-      url = "https://raw.githubusercontent.com/pspdev/psplibraries/2bd5631f2d9154a26dc09bd07ca979f8685c1d29/patches/bzip2-${BZIP2_VERSION}-PSP.patch";
+      url = "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/bzip2-${BZIP2_VERSION}-PSP.patch";
       sha256 = "wE6Yv7oANWf1fUR80voiNFtB8xSH+8RlXoqM4xNs/7w=";
     })
   ];
