@@ -77,9 +77,7 @@
     hydraJobs = {
       build = {
         psptoolchain = self.packages.x86_64-linux.psptoolchain;
-        libraries = builtins.removeAttrs self.packages.x86_64-linux.libraries.overrideDerivation(oldAttrs: {
-          SDLPackages = builtins.removeAttrs oldAttrs.SDLPackages [ "override" "overrideDerivation" ];
-        })[ "override" "overrideDerivation" ];
+        libraries = builtins.removeAttrs self.packages.x86_64-linux.libraries [ "override" "overrideDerivation" ];
       };
     };
   };

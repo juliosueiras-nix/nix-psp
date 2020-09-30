@@ -13,9 +13,9 @@ in rec {
   pspgl = buildLibrary "pspgl" {};
   SDL = buildLibrary "SDL" { libraries = [ pspirkeyb ]; };
 
-  SDLPackages = buildLibrary "SDLPackages" { 
+  SDLPackages = builtins.removeAttrs (buildLibrary "SDLPackages" { 
     libraries = [ SDL ];
-  };
+  }) [ "override" "overrideDerivation" ];
 
   SDL2 = buildLibrary "SDL2" { libraries = [ pspgl libpspvram ]; };
   bzip2 = buildLibrary "bzip2" {};
