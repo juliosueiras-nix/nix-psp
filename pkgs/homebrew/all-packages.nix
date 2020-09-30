@@ -38,5 +38,9 @@ in {
       rev = "8346579a9975f41763b2381cfb601900a9a84e6e";
       sha256 = "tz96Pf4RS2L1wcJ2HYr4+dltHdzTNi3YNcrqhLOXIjQ=";
     };
+
+    dontStrip = true;
+    dontDisableStatic = true;
+    hardeningDisable = [ "all" ];
   };
 }

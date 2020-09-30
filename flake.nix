@@ -79,6 +79,11 @@
       libraries = self.packages.x86_64-linux.libraries;
     };
 
+    packages.x86_64-linux.plugins = pkgs.callPackage ./pkgs/plugins/all-packages.nix {
+      pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
+      libraries = self.packages.x86_64-linux.libraries;
+    };
+
     hydraJobs = {
       build = {
         psptoolchain = self.packages.x86_64-linux.psptoolchain;
