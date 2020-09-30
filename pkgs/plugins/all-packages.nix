@@ -14,8 +14,7 @@ in {
     buildInputs = [ pspsdkEnv ];
 
     installPhase = ''
-      mkdir -p $out/{nix-support,plugin}
-      chmod a+rw uvc.prx
+      mkdir -p $out/nix-support
       ${zip}/bin/zip uvc.zip .
       cp uvc.zip $out/
       echo "file psp-plugins $out/uvc.zip" >> $out/nix-support/hydra-build-products
