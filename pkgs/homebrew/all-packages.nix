@@ -25,8 +25,10 @@ in {
     '';
 
     installPhase = ''
-      mkdir $out/
-      cp -a jeux_de_la_vie $out/
+      mkdir $out/nix-support
+      zip -r jeux_de_la_vie.zip jeux_de_la_vie/*
+      cp jeux_de_la_vie.zip $out/
+      echo "file psp-homebrew $out/jeux_de_la_vie.zip" >> $out/nix-support/hydra-build-products
     '';
 
     src = fetchFromGitHub {
