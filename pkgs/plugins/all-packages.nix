@@ -15,6 +15,7 @@ in {
 
     installPhase = ''
       mkdir -p $out/nix-support
+      chmod a+rw uvc.prx
       cp uvc.prx $out/
       echo "file psp-plugin $out/uvc.prx" >> $out/nix-support/hydra-build-products
     '';
