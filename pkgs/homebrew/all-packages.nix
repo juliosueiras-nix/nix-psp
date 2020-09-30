@@ -27,6 +27,7 @@ in {
     installPhase = ''
       mkdir -p $out/nix-support
       ${zip}/bin/zip -r jeux_de_la_vie.zip jeux_de_la_vie/*
+      chmod a+rw jeux_de_la_vie.zip
       cp jeux_de_la_vie.zip $out/
       echo "file psp-homebrew $out/jeux_de_la_vie.zip" >> $out/nix-support/hydra-build-products
     '';
