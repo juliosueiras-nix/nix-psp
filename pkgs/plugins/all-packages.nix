@@ -27,6 +27,7 @@ in {
     };
 
     dontStrip = true;
+    dontPatchELF = true;
     dontDisableStatic = true;
     hardeningDisable = [ "all" ];
   };
