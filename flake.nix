@@ -68,7 +68,6 @@
           pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
         };
       };
-
     };
 
     packages.x86_64-linux.libraries = pkgs.callPackage ./pkgs/libraries/all-packages.nix {

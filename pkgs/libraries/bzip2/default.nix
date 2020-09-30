@@ -20,7 +20,7 @@ in stdenv.mkDerivation {
   ];
 
   postPatch = ''
-    find . -name "Makefile" -exec sed -i "s|PREFIX=.*|PREFIX=$out|g" {} \; -exec sed -i 's|lcurses|lncurses|g' {} \;
+    find . -name "Makefile" -exec sed -i "s|PREFIX=.*|PREFIX=$out/psp|g" {} \; -exec sed -i 's|lcurses|lncurses|g' {} \;
   '';
 }
 

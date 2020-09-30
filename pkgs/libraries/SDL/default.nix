@@ -1,4 +1,4 @@
-{ stdenv, pspirkeyb, autoconf, gcc, libtool, fetchurl, pspsdk, ... }:
+{ stdenv, autoconf, callPackage, gcc, libtool, fetchurl, pspsdk, ... }:
 
 let
   SDL_VERSION = "1.2.15";
@@ -16,6 +16,7 @@ in stdenv.mkDerivation {
   PSPDEV = "${pspsdk}";
 
   configureFlags = [
+    "--prefix=$(out)/psp"
     "--enable-pspirkeyb"
     "--host=psp"
   ];
@@ -26,7 +27,6 @@ in stdenv.mkDerivation {
     cat acinclude/* >aclocal.m4
     autoconf
     export LDFLAGS="-L${pspsdk}/lib -L${pspsdk}/psp/sdk/lib -L${pspsdk}/psp/lib -lc -lpspuser"
-    export CFLAGS="-I${pspirkeyb}/include"
     export LIBS="-lc -lpspuser"
   '';
 
@@ -45,5 +45,4 @@ in stdenv.mkDerivation {
   dontStrip = true;
   hardeningDisable = [ "all" ];
 }
-
 

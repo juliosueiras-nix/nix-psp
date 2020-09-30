@@ -1,23 +1,24 @@
-{ callPackage, pspsdk, ... }:
+{ callPackage, buildEnv, pspsdk, ... }:
 
-rec {
-  pspirkeyb = callPackage ./pspirkeyb/default.nix {
-    inherit pspsdk;
+let
+  buildLibrary = name: { libraries ? null, postBuild ? "" }: callPackage (./. + "/${name}/default.nix") {
+    pspsdk = (if libraries != null then buildEnv {
+      name = "pspsdk-env";
+      paths = [ pspsdk ] ++ libraries;
+      inherit postBuild;
+    } else pspsdk);
+  };
+in rec {
+  pspirkeyb = buildLibrary "pspirkeyb" {};
+  pspgl = buildLibrary "pspgl" {};
+  SDL = buildLibrary "SDL" { libraries = [ pspirkeyb ]; };
+
+  SDLPackages = buildLibrary "SDLPackages" { 
+    libraries = [ SDL ];
   };
 
-  pspgl = callPackage ./pspgl/default.nix {
-    inherit pspsdk;
-  };
-
-  SDL = callPackage ./SDL/default.nix {
-    inherit pspsdk pspirkeyb;
-  };
-
-  bzip2 = callPackage ./bzip2/default.nix {
-    inherit pspsdk;
-  };
-
-  sqlite = callPackage ./sqlite/default.nix {
-    inherit pspsdk;
-  };
+  SDL2 = buildLibrary "SDL2" { libraries = [ pspgl libpspvram ]; };
+  bzip2 = buildLibrary "bzip2" {};
+  sqlite = buildLibrary "sqlite" {};
+  libpspvram = buildLibrary "libpspvram" {};
 }

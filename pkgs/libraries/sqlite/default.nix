@@ -26,6 +26,7 @@ in stdenv.mkDerivation {
   '';
 
   configureFlags = [
+    "--prefix=$(out)/psp"
     "--host=psp" 
     "--disable-readline" 
     "--disable-tcl"
