@@ -41,6 +41,10 @@ in stdenv.mkDerivation {
     })
   ];
 
+  postInstall = ''
+    find $out/psp/bin -exec sed -i 's;$(out)/psp;$(dirname "$0")/..;g' {} \;
+  '';
+
   dontDisableStatic = true;
   dontStrip = true;
   hardeningDisable = [ "all" ];

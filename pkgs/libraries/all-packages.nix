@@ -31,4 +31,7 @@ in rec {
   libpng = buildLibrary "libpng" { libraries = [ zlib ]; };
   freetype = buildLibrary "freetype" { libraries = [ zlib ]; };
   lua = buildLibrary "lua" {};
+  angelscript = buildLibrary "angelscript" { libraries = [ cmakeScript ]; };
+
+  cmakeScript = callPackage ./cmake.nix {};
 }

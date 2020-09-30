@@ -74,6 +74,11 @@
       pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
     };
 
+    packages.x86_64-linux.homebrew = pkgs.callPackage ./pkgs/homebrew/all-packages.nix {
+      pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
+      libraries = self.packages.x86_64-linux.libraries;
+    };
+
     hydraJobs = {
       build = {
         psptoolchain = self.packages.x86_64-linux.psptoolchain;
