@@ -79,7 +79,7 @@
       libraries = self.packages.x86_64-linux.libraries;
     };
 
-    packages.x86_64-linux.plugin = pkgs.callPackage ./pkgs/plugins/all-packages.nix {
+    packages.x86_64-linux.plugins = pkgs.callPackage ./pkgs/plugins/all-packages.nix {
       pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
       libraries = self.packages.x86_64-linux.libraries;
     };
