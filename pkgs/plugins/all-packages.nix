@@ -9,7 +9,7 @@ let
   };
 in {
   usbvideo = stdenv.mkDerivation {
-    name = "uvc";
+    name = "uvc-video";
 
     buildInputs = [ pspsdkEnv ];
 
