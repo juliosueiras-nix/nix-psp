@@ -16,9 +16,9 @@ in {
     installPhase = ''
       mkdir -p $out/{nix-support,plugin}
       chmod a+rw uvc.prx
-      ${zip}/bin/zip uvc.zip uvc.prx
+      ${zip}/bin/zip uvc.zip .
       cp uvc.zip $out/
-      echo "file psp-plugin $out/uvc.zip" >> $out/nix-support/hydra-build-products
+      echo "file psp-plugins $out/uvc.zip" >> $out/nix-support/hydra-build-products
     '';
 
     src = fetchFromGitHub {
