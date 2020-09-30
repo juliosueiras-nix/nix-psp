@@ -79,7 +79,7 @@
       libraries = self.packages.x86_64-linux.libraries;
     };
 
-    packages.x86_64-linux.plugin = pkgs.callPackage ./pkgs/plugin/all-packages.nix {
+    packages.x86_64-linux.plugin = pkgs.callPackage ./pkgs/plugins/all-packages.nix {
       pspsdk = self.packages.x86_64-linux.psptoolchain.stage2.pspsdk;
       libraries = self.packages.x86_64-linux.libraries;
     };
@@ -89,7 +89,7 @@
         psptoolchain = self.packages.x86_64-linux.psptoolchain;
         libraries = builtins.removeAttrs self.packages.x86_64-linux.libraries [ "override" "overrideDerivation" ];
         homebrew = builtins.removeAttrs self.packages.x86_64-linux.homebrew [ "override" "overrideDerivation" ];
-        plugin = builtins.removeAttrs self.packages.x86_64-linux.plugin [ "override" "overrideDerivation" ];
+        plugins = builtins.removeAttrs self.packages.x86_64-linux.plugins [ "override" "overrideDerivation" ];
       };
     };
   };
