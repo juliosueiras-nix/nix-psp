@@ -30,4 +30,5 @@ in rec {
   zlib = buildLibrary "zlib" {};
   libpng = buildLibrary "libpng" { libraries = [ zlib ]; };
   freetype = buildLibrary "freetype" { libraries = [ zlib ]; };
+  lua = buildLibrary "lua" {};
 }
