@@ -10,6 +10,10 @@ let
   };
 in rec {
   pspirkeyb = buildLibrary "pspirkeyb" {};
+  libbulletml = buildLibrary "libbulletml" {};
+  libmad = buildLibrary "libmad" {};
+  libogg = buildLibrary "libogg" {};
+  libtremor = buildLibrary "libtremor" {};
   jpeg = buildLibrary "jpeg" {};
   pspgl = buildLibrary "pspgl" {};
   SDL = buildLibrary "SDL" { libraries = [ pspirkeyb ]; };
@@ -31,6 +35,9 @@ in rec {
   libpng = buildLibrary "libpng" { libraries = [ zlib ]; };
   freetype = buildLibrary "freetype" { libraries = [ zlib ]; };
   lua = buildLibrary "lua" {};
+  expat = buildLibrary "expat" {};
+  libyaml = buildLibrary "libyaml" {};
+  opentri = buildLibrary "opentri" { libraries = [ zlib freetype libpng ]; };
   angelscript = buildLibrary "angelscript" { libraries = [ cmakeScript ]; };
 
   cmakeScript = callPackage ./cmake.nix {};

@@ -1,7 +1,7 @@
 { stdenv, zip, pspsdk, libraries, fetchFromGitHub, symlinkJoin , ... }:
 
 let
-  pspsdkEnv = symlinkJoin  {
+  pspsdkEnv = symlinkJoin {
     name = "test-env";
     paths = [
       pspsdk
@@ -15,7 +15,7 @@ let
     ];
   };
 
-  pspsdkEnv2 = symlinkJoin  {
+  pspsdkEnv2 = symlinkJoin {
     name = "test-env";
     paths = [
       pspsdk

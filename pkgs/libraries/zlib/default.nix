@@ -19,8 +19,10 @@ in stdenv.mkDerivation {
     unset CXX
     export LDFLAGS="-L${pspsdk}/psp/lib -L${pspsdk}/psp/sdk/lib -lc -lpspuser"
     mkdir -p $out/psp/{include,lib}
-    ls
-    find . -name Makefile -exec sed -i 's/\(.*\)$(PSPDIR)\(.*\)/\1$(PSPDIR_OUT)\2/g' {} \;
+
+    for file in $(find -name Makefile); do
+      substituteInPlace $file --replace '$(PSPDIR)' '$(PSPDIR_OUT)'
+    done
   '';
 
   patches = [

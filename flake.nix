@@ -84,6 +84,21 @@
       libraries = self.packages.x86_64-linux.libraries;
     };
 
+    packages.x86_64-linux.testOld = pkgs.buildEnv {
+      name = "SD";
+      paths = [
+        self.packages.x86_64-linux.psptoolchain.stage2.pspsdk
+      ];
+    };
+
+    packages.x86_64-linux.testNew = pkgs.buildEnv {
+      name = "SD";
+      paths = [
+        pkgs.vim
+        pkgs.python
+      ];
+    };
+
     hydraJobs = {
       build = {
         psptoolchain = self.packages.x86_64-linux.psptoolchain;
