@@ -7,11 +7,12 @@ stdenv.mkDerivation {
     repo = "newlib";
     owner = "pspdev";
 
-    rev = "7b50ff4d76f58e26fb33f6a4ea5f3a067ffe95be";
-    sha256 = "d8c/qiT6Ml1d+sI2U7mJbW8LS7EzPdlFG6a+WiBlmtM=";
+    # 3.3.0
+    #rev = "7b50ff4d76f58e26fb33f6a4ea5f3a067ffe95be";
+    #sha256 = "d8c/qiT6Ml1d+sI2U7mJbW8LS7EzPdlFG6a+WiBlmtM=";
     # 1.20.0
-    #rev = "6dc26bb7f8bdc7dff72a811104e1d654d77f75d9";
-    #sha256 = "lapI6bBzSINIdkQjyu9B8PeegJNFERPq6huWj3zbPUo=";
+    rev = "6dc26bb7f8bdc7dff72a811104e1d654d77f75d9";
+    sha256 = "lapI6bBzSINIdkQjyu9B8PeegJNFERPq6huWj3zbPUo=";
   };
 
   buildInputs = [ file texinfo stage1gcc binutils ];
