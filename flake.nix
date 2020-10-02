@@ -14,8 +14,8 @@
       pspsdk = toolchain.stage2.pspsdk;
 
       libraries = import ./pkgs/libraries/all-packages.nix {
-        inherit (pkgs) callPackage;
-        inherit pspsdk;
+        inherit (pkgs) callPackage lib;
+        inherit pspsdk newlibVersion;
       };
     in {
       inherit toolchain pspsdk libraries;

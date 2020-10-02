@@ -1,10 +1,10 @@
-{ callPackage, pspsdk, ... }:
+{ lib, callPackage, newlibVersion, pspsdk, ... }:
 
 let
   buildLibrary = name: { libraries ? null, postBuild ? "" }: callPackage (./. + "/${name}/default.nix") {
     pspsdk = (if libraries != null then pspsdk.withLibraries libraries else pspsdk);
   };
-in rec {
+in lib.mergeAttrs (rec {
   pspirkeyb = buildLibrary "pspirkeyb" {};
   libbulletml = buildLibrary "libbulletml" {};
   libmad = buildLibrary "libmad" {};
@@ -32,11 +32,12 @@ in rec {
   lua = buildLibrary "lua" {};
   expat = buildLibrary "expat" {};
   libyaml = buildLibrary "libyaml" {};
-  pthreads-emb = buildLibrary "pthreads-emb" {};
   zziplib = buildLibrary "zziplib" { libraries = [ zlib ]; };
   pixman = buildLibrary "pixman" { libraries = [ libpng ]; };
   opentri = buildLibrary "opentri" { libraries = [ zlib freetype libpng ]; };
   angelscript = buildLibrary "angelscript" { libraries = [ cmakeScript ]; };
 
   cmakeScript = callPackage ./cmake.nix {};
-}
+}) (if newlibVersion != "3.3.0" then {
+  pthreads-emb = buildLibrary "pthreads-emb" {};
+} else {})
