@@ -32,7 +32,7 @@ in rec {
   lua = buildLibrary "lua" {};
   expat = buildLibrary "expat" {};
   libyaml = buildLibrary "libyaml" {};
-  pthread-emb = buildLibrary "pthread-emb" { libraries = []; };
+  pthreads-emb = buildLibrary "pthreads-emb" {};
   zziplib = buildLibrary "zziplib" { libraries = [ zlib ]; };
   pixman = buildLibrary "pixman" { libraries = [ libpng ]; };
   opentri = buildLibrary "opentri" { libraries = [ zlib freetype libpng ]; };
