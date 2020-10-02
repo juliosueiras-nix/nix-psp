@@ -28,12 +28,10 @@
     };
 
     hydraJobs = {
-      build = {
-        default = self.packages.x86_64-linux.createPSPSDK {};
+      default = self.packages.x86_64-linux.createPSPSDK {};
 
-        withNewlib330 = self.packages.x86_64-linux.createPSPSDK {
-          newlibVersion = "3.3.0";
-        };
+      withNewlib330 = self.packages.x86_64-linux.createPSPSDK {
+        newlibVersion = "3.3.0";
       };
     };
   };
