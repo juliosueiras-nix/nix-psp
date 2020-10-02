@@ -6,7 +6,7 @@
   outputs = { self, nixpkgs }: let
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
   in {
-    packages.x86_64-linux.createPSPSDK = { newlibVersion ? "1.20.0", ... }: let
+    createPSPSDK = { newlibVersion ? "1.20.0", ... }: let
       toolchain = import ./pkgs/toolchain/default.nix { inherit (pkgs) callPackage; };
       pspsdk = toolchain.stage2.pspsdk;
 
@@ -28,9 +28,9 @@
     };
 
     hydraJobs = {
-      default = self.packages.x86_64-linux.createPSPSDK {};
+      default = self.createPSPSDK {};
 
-      withNewlib330 = self.packages.x86_64-linux.createPSPSDK {
+      withNewlib330 = self.createPSPSDK {
         newlibVersion = "3.3.0";
       };
     };
