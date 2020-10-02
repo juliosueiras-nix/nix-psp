@@ -9,6 +9,7 @@ in lib.mergeAttrs (rec {
   libbulletml = buildLibrary "libbulletml" {};
   libmad = buildLibrary "libmad" {};
   libogg = buildLibrary "libogg" {};
+  libvorbis = buildLibrary "libvorbis" { libraries = [ libogg ]; };
   libtremor = buildLibrary "libtremor" {};
   jpeg = buildLibrary "jpeg" {};
   pspgl = buildLibrary "pspgl" {};
