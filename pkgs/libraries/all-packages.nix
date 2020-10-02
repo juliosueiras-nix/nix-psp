@@ -7,6 +7,7 @@ let
 
     inherit postBuild;
   };
+
   buildLibrary = name: { libraries ? null, postBuild ? "" }: callPackage (./. + "/${name}/default.nix") {
     pspsdk = (if libraries != null then buildPSPEnv { inherit libraries postBuild; } else pspsdk);
   };
@@ -39,12 +40,7 @@ in rec {
   lua = buildLibrary "lua" {};
   expat = buildLibrary "expat" {};
   libyaml = buildLibrary "libyaml" {};
-  pthread-emb = buildLibrary "pthread-emb" {
-    libraries = [];
-    postBuild = ''
-      #unlink $out/psp/include/sys
-    '';
-  };
+  pthread-emb = buildLibrary "pthread-emb" { libraries = []; };
   zziplib = buildLibrary "zziplib" { libraries = [ zlib ]; };
   pixman = buildLibrary "pixman" { libraries = [ libpng ]; };
   opentri = buildLibrary "opentri" { libraries = [ zlib freetype libpng ]; };
