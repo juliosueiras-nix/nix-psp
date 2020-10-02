@@ -22,7 +22,7 @@ in rec {
   SDL = buildLibrary "SDL" { libraries = [ pspirkeyb ]; };
 
   SDLPackages = import ./SDLPackages/default.nix { 
-    pspsdk = buildPSPEnv [ SDL ];
+    pspsdk = buildPSPEnv { libraries = [ SDL ]; };
     inherit callPackage buildPSPEnv;
     libraries = {
       inherit SDL libmikmod libpng jpeg freetype;
