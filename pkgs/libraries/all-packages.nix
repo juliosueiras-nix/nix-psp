@@ -1,12 +1,14 @@
 { callPackage, buildEnv, pspsdk, ... }:
 
 let
-  buildPSPEnv = libraries: buildEnv {
+  buildPSPEnv = { libraries, postBuild ? "" }: buildEnv {
     name = "pspsdk-env";
     paths = [ pspsdk ] ++ libraries;
+
+    inherit postBuild;
   };
   buildLibrary = name: { libraries ? null, postBuild ? "" }: callPackage (./. + "/${name}/default.nix") {
-    pspsdk = (if libraries != null then buildPSPEnv libraries else pspsdk);
+    pspsdk = (if libraries != null then buildPSPEnv { inherit libraries postBuild; } else pspsdk);
   };
 in rec {
   pspirkeyb = buildLibrary "pspirkeyb" {};
@@ -37,6 +39,14 @@ in rec {
   lua = buildLibrary "lua" {};
   expat = buildLibrary "expat" {};
   libyaml = buildLibrary "libyaml" {};
+  pthread-emb = buildLibrary "pthread-emb" {
+    libraries = [];
+    postBuild = ''
+      #unlink $out/psp/include/sys
+    '';
+  };
+  zziplib = buildLibrary "zziplib" { libraries = [ zlib ]; };
+  pixman = buildLibrary "pixman" { libraries = [ libpng ]; };
   opentri = buildLibrary "opentri" { libraries = [ zlib freetype libpng ]; };
   angelscript = buildLibrary "angelscript" { libraries = [ cmakeScript ]; };
 

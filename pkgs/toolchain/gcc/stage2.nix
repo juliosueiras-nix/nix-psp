@@ -1,9 +1,8 @@
-{ stdenv, lib, fetchurl, binutils, stage1gcc, pspsdkLib, newlib, file, ... }:
+{ stdenv, lib, fetchurl, binutils, stage1, file, ... }:
 
 let
   GCC_VERSION = "9.3.0";
   gccDepsLibs = import ./libs.nix;
-
 in stdenv.mkDerivation {
   name = "psp-gcc";
   src = fetchTarball {
@@ -29,9 +28,9 @@ in stdenv.mkDerivation {
 
   preConfigure = ''
     mkdir -p $out
-    cp -a ${newlib}/* $out/
+    cp -a ${stage1.newlib}/* $out/
     chmod -R +w $out/
-    cp -a ${pspsdkLib}/* $out/
+    cp -a ${stage1.pspsdk}/* $out/
     chmod -R +w $out/
 
     ln -fs ${gccDepsLibs.gmpLib} gmp

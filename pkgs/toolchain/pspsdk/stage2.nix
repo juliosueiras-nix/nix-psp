@@ -1,4 +1,4 @@
-{ stdenv, lib, autoreconfHook, zlib, which, stage2gcc, binutils, fetchFromGitHub, file, ... }:
+{ stdenv, lib, autoreconfHook, zlib, which, stage2, binutils, fetchFromGitHub, file, ... }:
 
 stdenv.mkDerivation {
   name = "psp-sdk";
@@ -10,7 +10,7 @@ stdenv.mkDerivation {
     sha256 = "lWYAuhv/l4E4GlKNJ6O3FakeH3TcDhM09HzxY+2Wuuo=";
   };
 
-  buildInputs = [ zlib.dev file autoreconfHook which binutils stage2gcc ];
+  buildInputs = [ zlib.dev file autoreconfHook which binutils stage2.gcc ];
 
   configureScript = "../configure";
 
@@ -24,7 +24,7 @@ stdenv.mkDerivation {
     mkdir -p $out/
     cp -a ${binutils}/* $out/
     chmod -R +w $out/
-    cp -a ${stage2gcc}/* $out/
+    cp -a ${stage2.gcc}/* $out/
     chmod -R +w $out/
     mkdir build-psp
     cd build-psp

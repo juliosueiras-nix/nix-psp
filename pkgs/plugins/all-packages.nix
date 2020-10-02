@@ -1,34 +1,13 @@
-{ stdenv, zip, pspsdk, libraries, fetchFromGitHub, symlinkJoin , ... }:
+{ callPackage, symlinkJoin, pspsdk, libraries }:
 
 let
-  pspsdkEnv = symlinkJoin  {
-    name = "test-env";
-    paths = [
-      pspsdk
-    ];
-  };
-in {
-  usbvideo = stdenv.mkDerivation {
-    name = "uvc";
-
-    buildInputs = [ pspsdkEnv ];
-
-    installPhase = ''
-      mkdir -p $out/nix-support
-      cp uvc.prx $out/
-      echo "file psp-plugins $out/uvc.prx" >> $out/nix-support/hydra-build-products
-    '';
-
-    src = fetchFromGitHub {
-      repo = "psp-uvc-usb-video-class";
-      owner = "xerpi";
-      rev = "master";
-      sha256 = "yoILfJzloNB+J32diykdErJgCXsfJdJRAPmgtYgR77A=";
+  buildPlugin = path: { libraries ? [] }: let
+    pspsdkEnv = symlinkJoin {
+      name = "pspsdk-env";
+      paths = [ pspsdk ] ++ libraries;
     };
+  in callPackage path { pspsdk = pspsdkEnv; };
+in {
 
-    dontStrip = true;
-    dontPatchELF = true;
-    dontDisableStatic = true;
-    hardeningDisable = [ "all" ];
-  };
+  usbuvc = buildPlugin ./usbuvc {};
 }

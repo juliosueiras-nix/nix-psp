@@ -1,4 +1,4 @@
-{ stdenv, lib, autoreconfHook, which, stage1gcc, binutils, fetchFromGitHub, file, ... }:
+{ stdenv, lib, autoreconfHook, which, stage1, binutils, fetchFromGitHub, file, ... }:
 
 stdenv.mkDerivation {
   name = "psp-sdk";
@@ -10,7 +10,7 @@ stdenv.mkDerivation {
     sha256 = "lWYAuhv/l4E4GlKNJ6O3FakeH3TcDhM09HzxY+2Wuuo=";
   };
 
-  buildInputs = [ file autoreconfHook which stage1gcc binutils ];
+  buildInputs = [ file autoreconfHook which stage1.gcc binutils ];
 
   configureScript = "../configure";
 
