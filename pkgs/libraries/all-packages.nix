@@ -1,8 +1,8 @@
-{ lib, callPackage, newlibVersion, pspsdk, ... }:
+{ lib, callPackage, newlibVersion, toolchain, ... }:
 
 let
-  buildLibrary = name: { libraries ? null, postBuild ? "" }: callPackage (./. + "/${name}/default.nix") {
-    pspsdk = (if libraries != null then pspsdk.withLibraries libraries else pspsdk);
+  buildLibrary = name: { libraries ? null, }: callPackage (./. + "/${name}/default.nix") {
+    pspsdk = (if libraries != null then toolchain.pspsdk.withLibraries libraries else toolchain.pspsdk);
   };
 in lib.mergeAttrs (rec {
   pspirkeyb = buildLibrary "pspirkeyb" {};
@@ -15,7 +15,8 @@ in lib.mergeAttrs (rec {
   SDL = buildLibrary "SDL" { libraries = [ pspirkeyb ]; };
 
   SDLPackages = import ./SDLPackages/default.nix { 
-    inherit pspsdk callPackage;
+    inherit callPackage;
+    inherit (toolchain) pspsdk;
     libraries = {
       inherit SDL libmikmod libpng jpeg freetype;
     };

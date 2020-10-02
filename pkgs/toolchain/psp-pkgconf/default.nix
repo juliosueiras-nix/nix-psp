@@ -15,7 +15,10 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/bin
+    mkdir -p $out/psp/share/aclocal
+    cp pkg.m4 $out/psp/share/aclocal
     cp psp-pkg-config $out/bin/
   '';
+
   dontDisableStatic = true;
 }

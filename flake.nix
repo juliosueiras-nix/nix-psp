@@ -15,7 +15,7 @@
 
       libraries = import ./pkgs/libraries/all-packages.nix {
         inherit (pkgs) callPackage lib;
-        inherit pspsdk newlibVersion;
+        inherit toolchain newlibVersion;
       };
     in {
       inherit toolchain pspsdk libraries;
