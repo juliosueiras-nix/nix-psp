@@ -15,8 +15,7 @@ in rec {
   SDL = buildLibrary "SDL" { libraries = [ pspirkeyb ]; };
 
   SDLPackages = import ./SDLPackages/default.nix { 
-    pspsdk = pspsdk.withLibraries [ SDL ];
-    inherit callPackage;
+    inherit pspsdk callPackage;
     libraries = {
       inherit SDL libmikmod libpng jpeg freetype;
     };

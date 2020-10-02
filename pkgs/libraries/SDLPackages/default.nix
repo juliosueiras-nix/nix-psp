@@ -1,7 +1,9 @@
 { pspsdk, callPackage, libraries, ... }:
 
 {
-  gfx = callPackage ./gfx.nix { inherit pspsdk; };
+  gfx = callPackage ./gfx.nix { 
+    pspsdk = pspsdk.withLibraries (with libraries;[ SDL ]);
+  };
   image = callPackage ./image.nix { 
     pspsdk = pspsdk.withLibraries (with libraries;[ SDL libpng jpeg ]);
   };
