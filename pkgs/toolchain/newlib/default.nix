@@ -13,7 +13,7 @@ let
     };
   };
 in stdenv.mkDerivation {
-  name = "psp-newlib";
+  name = "psp-newlib-${version}";
   inherit version;
 
   src = fetchFromGitHub {

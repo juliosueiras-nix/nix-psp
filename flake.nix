@@ -7,7 +7,10 @@
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
   in {
     createPSPSDK = { newlibVersion ? "1.20.0", ... }: let
-      toolchain = import ./pkgs/toolchain/default.nix { inherit (pkgs) callPackage; };
+      toolchain = import ./pkgs/toolchain/default.nix { 
+        inherit (pkgs) callPackage;
+        inherit newlibVersion;
+      };
       pspsdk = toolchain.stage2.pspsdk;
 
       libraries = import ./pkgs/libraries/all-packages.nix {
