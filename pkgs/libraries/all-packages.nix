@@ -1,15 +1,8 @@
-{ callPackage, buildEnv, pspsdk, ... }:
+{ callPackage, pspsdk, ... }:
 
 let
-  buildPSPEnv = { libraries, postBuild ? "" }: buildEnv {
-    name = "pspsdk-env";
-    paths = [ pspsdk ] ++ libraries;
-
-    inherit postBuild;
-  };
-
   buildLibrary = name: { libraries ? null, postBuild ? "" }: callPackage (./. + "/${name}/default.nix") {
-    pspsdk = (if libraries != null then buildPSPEnv { inherit libraries postBuild; } else pspsdk);
+    pspsdk = (if libraries != null then pspsdk.withLibraries libraries else pspsdk);
   };
 in rec {
   pspirkeyb = buildLibrary "pspirkeyb" {};
@@ -22,8 +15,8 @@ in rec {
   SDL = buildLibrary "SDL" { libraries = [ pspirkeyb ]; };
 
   SDLPackages = import ./SDLPackages/default.nix { 
-    pspsdk = buildPSPEnv { libraries = [ SDL ]; };
-    inherit callPackage buildPSPEnv;
+    pspsdk = pspsdk.withLibraries [ SDL ];
+    inherit callPackage;
     libraries = {
       inherit SDL libmikmod libpng jpeg freetype;
     };

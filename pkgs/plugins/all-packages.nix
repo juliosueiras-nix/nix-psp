@@ -1,12 +1,7 @@
-{ callPackage, symlinkJoin, pspsdk, libraries }:
+{ callPackage, pspsdk, libraries }:
 
 let
-  buildPlugin = path: { libraries ? [] }: let
-    pspsdkEnv = symlinkJoin {
-      name = "pspsdk-env";
-      paths = [ pspsdk ] ++ libraries;
-    };
-  in callPackage path { pspsdk = pspsdkEnv; };
+  buildPlugin = path: { libraries ? [] }: callPackage path { pspsdk = pspsdk.withLibraries libraries; };
 in {
 
   usbuvc = buildPlugin ./usbuvc {};

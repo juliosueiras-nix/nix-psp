@@ -1,12 +1,7 @@
-{ callPackage, symlinkJoin, pspsdk, libraries }:
+{ callPackage, pspsdk, libraries }:
 
 let
-  buildHomebrew = path: { libraries ? [] }: let
-    pspsdkEnv = symlinkJoin {
-      name = "pspsdk-env";
-      paths = [ pspsdk ] ++ libraries ;
-    };
-  in callPackage path { pspsdk = pspsdkEnv; };
+  buildHomebrew = path: { libraries ? [] }: callPackage path { pspsdk = pspsdk.withLibraries libraries; };
 in {
   gameOfLife = buildHomebrew ./game_of_life {
     libraries = [

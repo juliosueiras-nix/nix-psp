@@ -11,18 +11,18 @@
       pspsdk = toolchain.stage2.pspsdk;
 
       libraries = import ./pkgs/libraries/all-packages.nix {
-        inherit (pkgs) callPackage buildEnv;
+        inherit (pkgs) callPackage;
         inherit pspsdk;
       };
     in {
       inherit toolchain pspsdk libraries;
       homebrew = import ./pkgs/homebrew/all-packages.nix {
-        inherit (pkgs) callPackage symlinkJoin;
+        inherit (pkgs) callPackage;
         inherit pspsdk libraries;
       };
 
       plugins = import ./pkgs/plugins/all-packages.nix {
-        inherit (pkgs) callPackage symlinkJoin;
+        inherit (pkgs) callPackage;
         inherit pspsdk libraries;
       };
     };
