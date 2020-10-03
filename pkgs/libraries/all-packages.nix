@@ -26,6 +26,14 @@ let
       };
     };
 
+    SDL2Packages = import ./SDL2Packages/default.nix { 
+      inherit callPackage;
+      inherit (toolchain) pspsdk;
+      libraries = {
+        inherit SDL2 libmikmod libpng jpeg freetype;
+      };
+    };
+
     SDL2 = buildLibrary "SDL2" { libraries = [ pspgl libpspvram ]; };
     bzip2 = buildLibrary "bzip2" {};
     sqlite = buildLibrary "sqlite" {};
