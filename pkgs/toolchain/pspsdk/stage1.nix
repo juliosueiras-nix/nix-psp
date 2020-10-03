@@ -1,10 +1,10 @@
-{ stdenv, src, lib, autoreconfHook, which, stage1, binutils, fetchFromGitHub, file
+{ stdenv, pspsdkSrc, lib, autoreconfHook, which, stage1, binutils, fetchFromGitHub, file
 , ... }:
 
 stdenv.mkDerivation {
   name = "psp-sdk";
 
-  inherit src;
+  src = pspsdkSrc;
 
   buildInputs = [ file autoreconfHook which stage1.gcc binutils ];
 
