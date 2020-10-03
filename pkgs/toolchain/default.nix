@@ -29,7 +29,7 @@ in rec {
       inherit binutils stage2 pspsdkSrc;
     };
 
-    pspsdkDocs = stage2.pspsdk.makeDocs;
+    #pspsdkDocs = stage2.pspsdk.makeDocs;
   };
 
   pspsdk = stage2.pspsdk;
