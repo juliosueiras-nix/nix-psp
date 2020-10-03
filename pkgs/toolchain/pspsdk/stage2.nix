@@ -32,7 +32,7 @@ let
           paths = libraries ++ [ self ];
         };
 
-      makeDocs = callPackage ./docs.nix { inherit stage2; } pspsdkSrc;
+      #makeDocs = callPackage ./docs.nix { inherit stage2; } pspsdkSrc;
     };
 
     dontInstall = true;
