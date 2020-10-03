@@ -16,8 +16,7 @@ in rec {
     gcc = callPackage ./gcc/stage1.nix { inherit binutils; };
 
     pspsdk = callPackage ./pspsdk/stage1.nix {
-      inherit binutils stage1;
-      src = pspsdkSrc;
+      inherit binutils stage1 pspsdkSrc;
     };
 
     newlib = callPackage ./newlib/default.nix {
@@ -30,8 +29,7 @@ in rec {
     gcc = callPackage ./gcc/stage2.nix { inherit binutils stage1; };
 
     pspsdk = callPackage ./pspsdk/stage2.nix { 
-      inherit binutils stage2;
-      src = pspsdkSrc;
+      inherit binutils stage2 pspsdkSrc;
     };
 
     pspsdkDocs = stage2.pspsdk.makeDocs;
