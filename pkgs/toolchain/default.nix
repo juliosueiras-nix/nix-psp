@@ -1,13 +1,20 @@
-{ callPackage, newlibVersion ? "1.20.0", ... }:
+{ callPackage, fetchFromGitHub, newlibVersion ? "1.20.0", ... }:
 
-rec {
+let
+  pspsdkSrc = fetchFromGitHub {
+    repo = "pspsdk";
+    owner = "pspdev";
+    rev = "3de82931a6acaa9fa51a41528ad581d736457618";
+    sha256 = "zMRskuTApByGozDJnYaV61b1gYwMcp0mRRUrXndqMxs=";
+  };
+in rec {
   binutils = callPackage ./binutils/default.nix { };
   stage1 = {
     gcc = callPackage ./gcc/stage1.nix { inherit binutils; };
 
     pspsdk = callPackage ./pspsdk/stage1.nix {
-      inherit binutils;
-      inherit stage1;
+      inherit binutils stage1;
+      src = pspsdkSrc;
     };
 
     newlib = callPackage ./newlib/default.nix {
@@ -19,7 +26,12 @@ rec {
   stage2 = {
     gcc = callPackage ./gcc/stage2.nix { inherit binutils stage1; };
 
-    pspsdk = callPackage ./pspsdk/stage2.nix { inherit binutils stage2; };
+    pspsdk = callPackage ./pspsdk/stage2.nix { 
+      inherit binutils stage2;
+      src = pspsdkSrc;
+    };
+
+    pspsdkDocs = stage2.pspsdk.makeDocs;
   };
 
   pspsdk = stage2.pspsdk;
