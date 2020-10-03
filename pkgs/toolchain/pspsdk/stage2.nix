@@ -1,11 +1,16 @@
-{ pspsdkSrc, callPackage, stdenv, lib, autoreconfHook, zlib, symlinkJoin, which, stage2, binutils
+{ callPackage, stdenv, lib, autoreconfHook, zlib, symlinkJoin, which, stage2, binutils
 , fetchFromGitHub, file, ... }:
 
 let
   self = stdenv.mkDerivation {
     name = "psp-sdk";
 
-    src = pspsdkSrc;
+    src = fetchFromGitHub {
+      repo = "pspsdk";
+      owner = "pspdev";
+      rev = "3de82931a6acaa9fa51a41528ad581d736457618";
+      sha256 = "zMRskuTApByGozDJnYaV61b1gYwMcp0mRRUrXndqMxs=";
+    };
 
     buildInputs = [ zlib.dev file autoreconfHook which binutils stage2.gcc ];
 
