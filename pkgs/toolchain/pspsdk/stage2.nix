@@ -34,7 +34,7 @@ let
       passthru = {
         withLibraries = libraries: symlinkJoin {
           name = "pspsdk-env";
-          paths = [ self ] ++ libraries;
+          paths = libraries ++ [ self ] ;
         };
       };
 

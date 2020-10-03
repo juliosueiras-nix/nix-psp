@@ -23,9 +23,9 @@ in stdenv.mkDerivation {
   ];
 
   installPhase = ''
-    mkdir -p $out/{include,lib}
-    cp -v ../../../include/*.h $out/include/
-    cp -v ../../lib/lib*.a $out/lib/
+    mkdir -p $out/psp/{include,lib}
+    cp -v ../../../include/*.h $out/psp/include/
+    cp -v ../../lib/lib*.a $out/psp/lib/
   '';
 
   dontDisableStatic = true;
