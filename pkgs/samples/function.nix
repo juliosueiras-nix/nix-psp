@@ -14,14 +14,14 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/nix-support
+    for prxFile in *.prx; do
+      cp $prxFile $out/
+      echo "file psp-plugin $out/$prxFile" >> $out/nix-support/hydra-build-products
+    done
+
     if [ -f EBOOT.PBP ]; then
       cp EBOOT.PBP $out/
       echo "file psp-homebrew $out/EBOOT.PBP" >> $out/nix-support/hydra-build-products
-    else 
-      for prxFile in *.prx; do
-        cp $prxFile $out/
-        echo "file psp-plugin $out/$prxFile" >> $out/nix-support/hydra-build-products
-      done
     fi
   '';
 

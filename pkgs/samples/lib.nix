@@ -21,7 +21,7 @@ in merge (lib.lists.forEach fileList (x:
     } else if length == 2 then {
       "${lib.elemAt items 1}" = buildSample {
         name = lib.elemAt items 1;
-        src = "${pspsdk}/psp/samples/${lib.elemAt items 1}";
+        src = "./${lib.elemAt items 1}";
       };
     } else
       { });
