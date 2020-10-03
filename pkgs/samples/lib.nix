@@ -1,10 +1,10 @@
-{ lib, runCommand, pspsdk, buildSample, ... }:
+{ lib, runCommand, pspsdkSrc, buildSample, ... }:
 
 let
   fileList = lib.splitString "\n" (lib.readFile
     (runCommand "test" { preferLocalBuild = true; } ''
-      cd ${pspsdk}/psp/sdk/samples
-      find . -name Makefile -exec dirname {} \; > $out
+      cd ${pspsdkSrc}/src/samples
+      find . -name Makefile.sample -exec dirname {} \; > $out
     ''));
   merge = builtins.foldl' (a: b: lib.recursiveUpdate a b) { };
 in merge (lib.lists.forEach fileList (x:

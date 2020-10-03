@@ -1,15 +1,16 @@
-{ stdenv, pspsdk, ... }:
+{ stdenv, pspsdkSrc, ... }:
 
 { name, src, ... }:
 stdenv.mkDerivation {
   inherit name;
 
-  src = "${pspsdk}/psp/sdk/samples";
+  src = "${pspsdkSrc}/src/samples";
 
   buildInputs = [ pspsdk ];
 
   preBuild = ''
     cd ${src}
+    mv Makefile.sample Makefile
   '';
 
   installPhase = ''
