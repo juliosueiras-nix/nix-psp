@@ -1,29 +1,20 @@
-{ stdenv, lib, autoreconfHook, zlib, which, stage2, binutils, doxygen, file, ... }:
+{ stdenv, lib, which, doxygen, ... }:
 
 src: stdenv.mkDerivation {
   name = "psp-sdk-docs";
 
   inherit src;
 
-  buildInputs = [ doxygen zlib.dev file autoreconfHook which binutils stage2.gcc ];
-
-  makeFlags = [ "doxygen-doc" ];
-
-  configureScript = "../configure";
-
-  configureFlags = [ "--with-pspdev=$(out)" ];
-
-  preConfigure = ''
-      mkdir -p $out/
-      cp -a ${binutils}/* $out/
-      chmod -R +w $out/
-      cp -a ${stage2.gcc}/* $out/
-      chmod -R +w $out/
-      mkdir build-psp
-      cd build-psp
+  buildPhase = ''
+    ${doxygen}/bin/doxygen ./Doxyfile
   '';
 
-  dontInstall = true;
+  installPhase = ''
+    mkdir -p $out/{doc,nix-support}
+    cp -rf doc/html/* $out/doc/
+    echo "doc pspsdk-doc $out/share/doc" >> $out/nix-support/hydra-build-products
+  '';
+
   dontDisableStatic = true;
   dontStrip = true;
   hardeningDisable = [ "all" ];
