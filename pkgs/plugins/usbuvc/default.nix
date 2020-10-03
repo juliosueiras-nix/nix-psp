@@ -6,9 +6,9 @@ stdenv.mkDerivation {
   buildInputs = [ pspsdk ];
 
   installPhase = ''
-      mkdir -p $out/nix-support
-      cp uvc.prx $out/
-      echo "file psp-plugins $out/uvc.prx" >> $out/nix-support/hydra-build-products
+    mkdir -p $out/nix-support
+    cp uvc.prx $out/
+    echo "file psp-plugins $out/uvc.prx" >> $out/nix-support/hydra-build-products
   '';
 
   src = fetchFromGitHub {

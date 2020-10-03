@@ -1,7 +1,6 @@
 { stdenv, fetchurl, pspsdk, ... }:
 
-let
-  LIBYAML_VERSION = "0.1.4";
+let LIBYAML_VERSION = "0.1.4";
 in stdenv.mkDerivation {
   name = "libyaml";
 
@@ -14,7 +13,8 @@ in stdenv.mkDerivation {
 
   patchPhase = let
     configSub = (fetchurl {
-      url = "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/config.sub";
+      url =
+        "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/config.sub";
       sha256 = "TzlDC6/3Rb6aJRjVPZLAYSophSbiDaslnN8PYtYEias=";
     });
   in ''
@@ -28,10 +28,7 @@ in stdenv.mkDerivation {
     export LIBS="-lc -lpspuser"
   '';
 
-  configureFlags = [
-    "--prefix=$(out)/psp"
-    "--host=psp" 
-  ];
+  configureFlags = [ "--prefix=$(out)/psp" "--host=psp" ];
 
   dontDisableStatic = true;
   dontStrip = true;

@@ -12,11 +12,8 @@ stdenv.mkDerivation {
 
   buildInputs = [ autoconf automake pspsdk ];
 
-  configureFlags = [
-    "--prefix=$(out)/psp"
-    "--host=psp"
-    "--with-sdl-prefix=${pspsdk}/psp"
-  ];
+  configureFlags =
+    [ "--prefix=$(out)/psp" "--host=psp" "--with-sdl-prefix=${pspsdk}/psp" ];
 
   preConfigure = ''
     unset CC

@@ -1,7 +1,9 @@
 { callPackage, pspsdk, libraries }:
 
 let
-  buildHomebrew = path: { libraries ? [] }: callPackage path { pspsdk = pspsdk.withLibraries libraries; };
+  buildHomebrew = path:
+    { libraries ? [ ] }:
+    callPackage path { pspsdk = pspsdk.withLibraries libraries; };
 in {
   gameOfLife = buildHomebrew ./game_of_life {
     libraries = [

@@ -1,4 +1,5 @@
-{ stdenv, lib, texinfo, version, which, stage1, binutils, fetchFromGitHub, file, ... }:
+{ stdenv, lib, texinfo, version, which, stage1, binutils, fetchFromGitHub, file
+, ... }:
 
 let
   versions = {
@@ -28,8 +29,8 @@ in stdenv.mkDerivation {
 
   configureFlags = [
     "--target=psp"
-    "--enable-newlib-iconv" 
-    "--enable-newlib-multithread" 
+    "--enable-newlib-iconv"
+    "--enable-newlib-multithread"
     "--enable-newlib-mb"
   ];
 

@@ -1,4 +1,5 @@
-{ stdenv, libtool, automake, autoconf, callPackage, fetchFromGitHub, pspsdk, ... }:
+{ stdenv, libtool, automake, autoconf, callPackage, fetchFromGitHub, pspsdk, ...
+}:
 
 stdenv.mkDerivation {
   name = "freetype";

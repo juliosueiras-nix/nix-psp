@@ -1,12 +1,12 @@
 { stdenv, cmake, fetchzip, pspsdk, ... }:
 
-let
-  ANGELSCRIPT_VERSION = "2.23.0";
+let ANGELSCRIPT_VERSION = "2.23.0";
 in stdenv.mkDerivation {
   name = "angelscript";
 
   src = fetchzip {
-    url = "http://www.angelcode.com/angelscript/sdk/files/angelscript_${ANGELSCRIPT_VERSION}.zip";
+    url =
+      "http://www.angelcode.com/angelscript/sdk/files/angelscript_${ANGELSCRIPT_VERSION}.zip";
     sha256 = "SsG0Ab42MaRVRf9WOYQDemjNgAR0UsJtzOs1dxys2VQ=";
   };
 

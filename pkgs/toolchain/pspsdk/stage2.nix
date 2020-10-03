@@ -1,4 +1,5 @@
-{ stdenv, lib, autoreconfHook, zlib, symlinkJoin, which, stage2, binutils, fetchFromGitHub, file, ... }:
+{ stdenv, lib, autoreconfHook, zlib, symlinkJoin, which, stage2, binutils
+, fetchFromGitHub, file, ... }:
 
 let
   self = stdenv.mkDerivation {
@@ -15,32 +16,31 @@ let
 
     configureScript = "../configure";
 
-    configureFlags = [
-      "--with-pspdev=$(out)"
-      ];
+    configureFlags = [ "--with-pspdev=$(out)" ];
 
-      makeFlags = [ "all" "install" ];
+    makeFlags = [ "all" "install" ];
 
-      preConfigure = ''
-        mkdir -p $out/
-        cp -a ${binutils}/* $out/
-        chmod -R +w $out/
-        cp -a ${stage2.gcc}/* $out/
-        chmod -R +w $out/
-        mkdir build-psp
-        cd build-psp
-      '';
+    preConfigure = ''
+      mkdir -p $out/
+      cp -a ${binutils}/* $out/
+      chmod -R +w $out/
+      cp -a ${stage2.gcc}/* $out/
+      chmod -R +w $out/
+      mkdir build-psp
+      cd build-psp
+    '';
 
-      passthru = {
-        withLibraries = libraries: symlinkJoin {
+    passthru = {
+      withLibraries = libraries:
+        symlinkJoin {
           name = "pspsdk-env";
-          paths = libraries ++ [ self ] ;
+          paths = libraries ++ [ self ];
         };
-      };
-
-      dontInstall = true;
-      dontDisableStatic = true;
-      dontStrip = true;
-      hardeningDisable = [ "all" ];
     };
+
+    dontInstall = true;
+    dontDisableStatic = true;
+    dontStrip = true;
+    hardeningDisable = [ "all" ];
+  };
 in self

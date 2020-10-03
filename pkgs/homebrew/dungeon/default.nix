@@ -8,16 +8,16 @@ stdenv.mkDerivation {
   buildInputs = [ pspsdk ];
 
   patchPhase = ''
-      sed -i 's;INCDIR += ./include;INCDIR += ./include ${pspsdk}/psp/include;g' Makefile
-      sed -i 's;-L''${PSPDEV}/psp;-L''${PSPDEV}/psp/lib;g' Makefile
+    sed -i 's;INCDIR += ./include;INCDIR += ./include ${pspsdk}/psp/include;g' Makefile
+    sed -i 's;-L''${PSPDEV}/psp;-L''${PSPDEV}/psp/lib;g' Makefile
   '';
 
   installPhase = ''
-      mkdir -p $out/nix-support
-      cd bin
-      ${zip}/bin/zip dungeon.zip EBOOT.PBP
-      cp dungeon.zip $out/
-      echo "file psp-homebrew $out/dungeon.zip" >> $out/nix-support/hydra-build-products
+    mkdir -p $out/nix-support
+    cd bin
+    ${zip}/bin/zip dungeon.zip EBOOT.PBP
+    cp dungeon.zip $out/
+    echo "file psp-homebrew $out/dungeon.zip" >> $out/nix-support/hydra-build-products
   '';
 
   src = fetchFromGitHub {

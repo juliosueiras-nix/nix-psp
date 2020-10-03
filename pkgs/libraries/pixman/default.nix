@@ -1,7 +1,6 @@
 { stdenv, fetchurl, perl, pspsdk, ... }:
 
-let
-  PIXMAN_VERSION = "0.24.4";
+let PIXMAN_VERSION = "0.24.4";
 in stdenv.mkDerivation {
   name = "pixman";
 
@@ -14,7 +13,8 @@ in stdenv.mkDerivation {
 
   patchPhase = let
     configSub = (fetchurl {
-      url = "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/config.sub";
+      url =
+        "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/config.sub";
       sha256 = "TzlDC6/3Rb6aJRjVPZLAYSophSbiDaslnN8PYtYEias=";
     });
   in ''
@@ -30,10 +30,7 @@ in stdenv.mkDerivation {
     export PNG_LIBS="-L${pspsdk}/psp/lib -lpng -lz"
   '';
 
-  configureFlags = [
-    "--prefix=$(out)/psp"
-    "--host=psp" 
-  ];
+  configureFlags = [ "--prefix=$(out)/psp" "--host=psp" ];
 
   dontDisableStatic = true;
   dontStrip = true;

@@ -11,9 +11,7 @@ stdenv.mkDerivation {
 
   buildInputs = [ pspsdk ];
 
-  makeFlags = [
-    "-C platform/psp"
-  ];
+  makeFlags = [ "-C platform/psp" ];
 
   configurePhase = ''
     unset CC

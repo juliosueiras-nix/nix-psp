@@ -1,12 +1,12 @@
 { stdenv, tcl, fetchurl, pspsdk, ... }:
 
-let
-  SQLITE_VERSION = "26778480";
+let SQLITE_VERSION = "26778480";
 in stdenv.mkDerivation {
   name = "sqlite";
 
   src = fetchurl {
-    url = "https://www.sqlite.org/src/tarball/${SQLITE_VERSION}/SQLite-${SQLITE_VERSION}.tar.gz";
+    url =
+      "https://www.sqlite.org/src/tarball/${SQLITE_VERSION}/SQLite-${SQLITE_VERSION}.tar.gz";
     sha256 = "AnA/0H5QUP9ifSfiOgMTpKgojXoua0Z4+Jm1OxYoalA=";
   };
 
@@ -15,7 +15,6 @@ in stdenv.mkDerivation {
   PSPDEV = "${pspsdk}";
 
   configureScript = "../configure";
-
 
   preConfigure = ''
     unset CC
@@ -27,8 +26,8 @@ in stdenv.mkDerivation {
 
   configureFlags = [
     "--prefix=$(out)/psp"
-    "--host=psp" 
-    "--disable-readline" 
+    "--host=psp"
+    "--disable-readline"
     "--disable-tcl"
     "--disable-threadsafe"
     "--disable-amalgamation"
@@ -36,7 +35,8 @@ in stdenv.mkDerivation {
 
   patches = [
     (fetchurl {
-      url = "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/sqlite-3.7.3-PSP.patch";
+      url =
+        "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/sqlite-3.7.3-PSP.patch";
       sha256 = "IynK/hZHAVcjWq5SDVdyFqcml9Dk1yvepI7Gb6tLXlk=";
     })
   ];

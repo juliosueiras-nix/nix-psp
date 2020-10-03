@@ -14,7 +14,8 @@ stdenv.mkDerivation {
 
   patches = [
     (fetchurl {
-      url = "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/smpeg-psp.patch";
+      url =
+        "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/smpeg-psp.patch";
       sha256 = "fnaEiC3WbP+KnY9+Fe0v9YWhtfa6vAaeJqeYGuqzTqo=";
     })
   ];

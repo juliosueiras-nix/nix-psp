@@ -1,7 +1,6 @@
 { stdenv, fetchurl, pspsdk, ... }:
 
-let
-  BZIP2_VERSION = "1.0.6";
+let BZIP2_VERSION = "1.0.6";
 in stdenv.mkDerivation {
   name = "bzip2";
 
@@ -14,7 +13,8 @@ in stdenv.mkDerivation {
 
   patches = [
     (fetchurl {
-      url = "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/bzip2-${BZIP2_VERSION}-PSP.patch";
+      url =
+        "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/bzip2-${BZIP2_VERSION}-PSP.patch";
       sha256 = "wE6Yv7oANWf1fUR80voiNFtB8xSH+8RlXoqM4xNs/7w=";
     })
   ];
@@ -23,5 +23,4 @@ in stdenv.mkDerivation {
     find . -name "Makefile" -exec sed -i "s|PREFIX=.*|PREFIX=$out/psp|g" {} \; -exec sed -i 's|lcurses|lncurses|g' {} \;
   '';
 }
-
 

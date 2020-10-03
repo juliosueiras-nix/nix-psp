@@ -1,7 +1,6 @@
 { stdenv, autoconf, gcc, libtool, fetchFromGitHub, pspsdk, ... }:
 
-let
-  SDL2_VERSION = "2.0.9";
+let SDL2_VERSION = "2.0.9";
 in stdenv.mkDerivation {
   name = "SDL2";
 
@@ -34,5 +33,4 @@ in stdenv.mkDerivation {
   dontStrip = true;
   hardeningDisable = [ "all" ];
 }
-
 

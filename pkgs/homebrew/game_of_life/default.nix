@@ -1,4 +1,4 @@
-{ stdenv, pspsdk, zip, fetchFromGitHub,... }:
+{ stdenv, pspsdk, zip, fetchFromGitHub, ... }:
 
 stdenv.mkDerivation {
   name = "game_of_life_for_psp_with_sdl";
@@ -6,15 +6,15 @@ stdenv.mkDerivation {
   buildInputs = [ pspsdk ];
 
   patchPhase = ''
-      sed -i 's;"SDL/SDL.h";<SDL.h>;g' main.c
+    sed -i 's;"SDL/SDL.h";<SDL.h>;g' main.c
   '';
 
   installPhase = ''
-      mkdir -p $out/nix-support
-      ${zip}/bin/zip -r jeux_de_la_vie.zip jeux_de_la_vie/*
-      chmod a+rw jeux_de_la_vie.zip
-      cp jeux_de_la_vie.zip $out/
-      echo "file psp-homebrew $out/jeux_de_la_vie.zip" >> $out/nix-support/hydra-build-products
+    mkdir -p $out/nix-support
+    ${zip}/bin/zip -r jeux_de_la_vie.zip jeux_de_la_vie/*
+    chmod a+rw jeux_de_la_vie.zip
+    cp jeux_de_la_vie.zip $out/
+    echo "file psp-homebrew $out/jeux_de_la_vie.zip" >> $out/nix-support/hydra-build-products
   '';
 
   src = fetchFromGitHub {

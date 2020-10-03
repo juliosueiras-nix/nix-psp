@@ -1,12 +1,12 @@
 { stdenv, fetchurl, pspsdk, ... }:
 
-let
-  EXPAT_VERSION = "2.1.0";
+let EXPAT_VERSION = "2.1.0";
 in stdenv.mkDerivation {
   name = "expat";
 
   src = fetchurl {
-    url = "http://sourceforge.net/projects/expat/files/expat/${EXPAT_VERSION}/expat-${EXPAT_VERSION}.tar.gz";
+    url =
+      "http://sourceforge.net/projects/expat/files/expat/${EXPAT_VERSION}/expat-${EXPAT_VERSION}.tar.gz";
     sha256 = "gjcFRy+BbfIcj2qgJt0WKygIBoOLtVs0MrD7H8yn64Y=";
   };
 
@@ -19,14 +19,12 @@ in stdenv.mkDerivation {
     export LIBS="-lc -lpspuser"
   '';
 
-  configureFlags = [
-    "--prefix=$(out)/psp"
-    "--host=psp" 
-  ];
+  configureFlags = [ "--prefix=$(out)/psp" "--host=psp" ];
 
   patchPhase = let
     configSub = (fetchurl {
-      url = "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/config.sub";
+      url =
+        "https://raw.githubusercontent.com/pspdev/psplibraries/9d4afd89ee8983e647e9207a8d738159aceb35ef/patches/config.sub";
       sha256 = "TzlDC6/3Rb6aJRjVPZLAYSophSbiDaslnN8PYtYEias=";
     });
   in ''

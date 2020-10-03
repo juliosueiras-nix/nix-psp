@@ -1,4 +1,5 @@
-{ stdenv, lib, autoreconfHook, which, stage1, binutils, fetchFromGitHub, file, ... }:
+{ stdenv, lib, autoreconfHook, which, stage1, binutils, fetchFromGitHub, file
+, ... }:
 
 stdenv.mkDerivation {
   name = "psp-sdk";
@@ -14,9 +15,7 @@ stdenv.mkDerivation {
 
   configureScript = "../configure";
 
-  configureFlags = [
-    "--with-pspdev=$(out)"
-  ];
+  configureFlags = [ "--with-pspdev=$(out)" ];
 
   preConfigure = ''
     mkdir build-psp

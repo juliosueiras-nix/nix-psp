@@ -3,12 +3,14 @@
 stdenv.mkDerivation {
   name = "zziplib";
 
-  src = "${fetchFromGitHub {
-    repo = "psp-ports";
-    owner = "pspdev";
-    rev = "8804b97c955a156e75f1b552b8a5aae9713f674f";
-    sha256 = "x09wM/AfeYgKoTRmxsr7iEG84VLzP2DCksAeHVWRCh0=";
-  }}/zziplib";
+  src = "${
+      fetchFromGitHub {
+        repo = "psp-ports";
+        owner = "pspdev";
+        rev = "8804b97c955a156e75f1b552b8a5aae9713f674f";
+        sha256 = "x09wM/AfeYgKoTRmxsr7iEG84VLzP2DCksAeHVWRCh0=";
+      }
+    }/zziplib";
 
   buildInputs = [ pspsdk ];
 
@@ -27,10 +29,7 @@ stdenv.mkDerivation {
     --replace "#define ZZIP_HAVE_DIRENT_H  1" ""
   '';
 
-  configureFlags = [
-    "--prefix=$(out)/psp"
-    "--host=psp"
-  ];
+  configureFlags = [ "--prefix=$(out)/psp" "--host=psp" ];
 
   dontDisableStatic = true;
   dontStrip = true;

@@ -1,4 +1,5 @@
-{ stdenv, lib, which, pspsdk, binutils, texinfo4, fetchFromGitHub, readline, ncurses, libusb, file, ... }:
+{ stdenv, lib, which, pspsdk, binutils, texinfo4, fetchFromGitHub, readline
+, ncurses, libusb, file, ... }:
 
 stdenv.mkDerivation {
   name = "psplinkusb";

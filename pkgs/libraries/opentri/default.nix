@@ -4,7 +4,8 @@ stdenv.mkDerivation {
   name = "opentri";
 
   src = fetchTarball {
-    url = "https://github.com/SamRH/openTRI/archive/ec3f4418b8058fde3728c98f0f784ce06da7b108.tar.gz";
+    url =
+      "https://github.com/SamRH/openTRI/archive/ec3f4418b8058fde3728c98f0f784ce06da7b108.tar.gz";
     sha256 = "1b2l0jdkrbk5qmg8rw86x36kwh13qqbjbqsshvaqvwhip8kiyayc";
   };
 

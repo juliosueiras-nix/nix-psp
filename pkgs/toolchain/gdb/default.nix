@@ -1,7 +1,7 @@
-{ stdenv, lib, texinfo, which, pspsdk, binutils, readline, zlib, fetchurl, file, ... }:
+{ stdenv, lib, texinfo, which, pspsdk, binutils, readline, zlib, fetchurl, file
+, ... }:
 
-let
-  GDB_VERSION = "7.5.1";
+let GDB_VERSION = "7.5.1";
 in stdenv.mkDerivation {
   name = "psp-gdb";
 
@@ -31,7 +31,7 @@ in stdenv.mkDerivation {
     "--target=psp"
     "--disable-werror"
     "--disable-nls"
-    "--with-system-zlib" 
+    "--with-system-zlib"
     "--with-system-readline"
   ];
 

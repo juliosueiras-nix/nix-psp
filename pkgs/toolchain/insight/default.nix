@@ -1,12 +1,13 @@
-{ stdenv, lib, which, pspsdk, binutils, ncurses, texinfo4, fetchurl, file, x11, ... }:
+{ stdenv, lib, which, pspsdk, binutils, ncurses, texinfo4, fetchurl, file, x11
+, ... }:
 
-let
-  INSIGHT_VERSION = "6.8";
+let INSIGHT_VERSION = "6.8";
 in stdenv.mkDerivation {
   name = "psp-insight";
 
   src = fetchurl {
-    url = "https://sourceware.org/pub/insight/releases/insight-${INSIGHT_VERSION}a.tar.bz2";
+    url =
+      "https://sourceware.org/pub/insight/releases/insight-${INSIGHT_VERSION}a.tar.bz2";
     sha256 = "8Y+/X2669Bx+K3hVE7DEb7A8F8YjC6+1wgq/nYUDvF0=";
   };
 
@@ -22,11 +23,7 @@ in stdenv.mkDerivation {
 
   configureScript = "../configure";
 
-  configureFlags = [
-    "--target=psp"
-    "--disable-werror"
-    "--disable-nls"
-  ];
+  configureFlags = [ "--target=psp" "--disable-werror" "--disable-nls" ];
 
   preConfigure = ''
     mkdir build-psp
