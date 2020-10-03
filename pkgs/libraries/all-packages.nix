@@ -14,6 +14,7 @@ let
     libtremor = buildLibrary "libtremor" {};
     jpeg = buildLibrary "jpeg" {};
     pspgl = buildLibrary "pspgl" {};
+    smpeg-psp = buildLibrary "smpeg-psp" { libraries = [ SDL ]; };
     SDL = buildLibrary "SDL" { libraries = [ pspirkeyb ]; };
 
     SDLPackages = import ./SDLPackages/default.nix { 
