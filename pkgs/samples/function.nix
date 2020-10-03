@@ -1,4 +1,4 @@
-{ stdenv, pspsdkSrc, ... }:
+{ stdenv, pspsdkSrc, pspsdk, ... }:
 
 { name, src, ... }:
 stdenv.mkDerivation {
