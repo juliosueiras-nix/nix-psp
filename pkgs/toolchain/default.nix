@@ -4,8 +4,8 @@ let
   pspsdkSrc = fetchFromGitHub {
     repo = "pspsdk";
     owner = "pspdev";
-    rev = "3de82931a6acaa9fa51a41528ad581d736457618";
-    sha256 = "zMRskuTApByGozDJnYaV61b1gYwMcp0mRRUrXndqMxs=";
+    rev = "b80410f008f185e73d166d304eb3c3942e1d1d61";
+    sha256 = "fd0NuO7DM/Oy5eVT1sjADAn2yJ4N3AABwYSQrVxN36Y=";
   };
 in rec {
   inherit pspsdkSrc;
@@ -36,6 +36,10 @@ in rec {
   };
 
   pspsdk = stage2.pspsdk;
+
+  external = {
+    gdb = callPackage ./gdb/external.nix { inherit binutils pspsdk; };
+  };
 
   debug = {
     gdb = callPackage ./gdb/default.nix { inherit binutils pspsdk; };
