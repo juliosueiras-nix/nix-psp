@@ -11,21 +11,22 @@ stdenv.mkDerivation {
 
   buildInputs = [ file flex texinfo pspsdk binutils readline.dev zlib.dev ];
 
-  configureScript = "../configure";
-
   configureFlags = [
     "--target=psp"
     "--disable-werror"
     "--disable-nls"
     #"--disable-binutils"
+    #"--disable-ld"
+    #"--disable-gprof"
+    #"--disable-gold"
+    #"--disable-gas"
+    #"--disable-elfcpp"
     "--with-system-zlib"
     "--with-system-readline"
   ];
 
   preConfigure = ''
     cd gdb
-    mkdir build-psp
-    cd build-psp
   '';
 
   dontDisableStatic = true;
