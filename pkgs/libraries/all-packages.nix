@@ -52,6 +52,10 @@ let
     angelscript = buildLibrary "angelscript" { libraries = [ cmakeScript ]; };
 
     cmakeScript = callPackage ./cmake.nix { };
+
+    thirdparty = import ./thirdparty/all-packages.nix {
+      inherit toolchain callPackage;
+    };
   });
 in lib.mergeAttrs mainLibraries (if newlibVersion != "3.3.0" then rec {
   pthreads-emb = buildLibrary "pthreads-emb" { };
