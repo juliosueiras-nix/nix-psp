@@ -1,4 +1,4 @@
-{ stdenv, lib, texinfo, which, pspsdk, binutils, readline, zlib, fetchurl, file, ... }:
+{ stdenv, lib, flex, texinfo, which, pspsdk, binutils, readline, zlib, fetchurl, file, ... }:
 
 stdenv.mkDerivation {
   name = "psp-gdb";
@@ -9,7 +9,7 @@ stdenv.mkDerivation {
     rev = "d773a3425a9b9d8d01d317b280a5eb2ca35e607c";
   };
 
-  buildInputs = [ file texinfo pspsdk binutils readline.dev zlib.dev ];
+  buildInputs = [ file flex texinfo pspsdk binutils readline.dev zlib.dev ];
 
   configureScript = "../configure";
 
