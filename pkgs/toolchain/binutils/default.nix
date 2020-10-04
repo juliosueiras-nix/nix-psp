@@ -20,7 +20,7 @@ in stdenv.mkDerivation {
   patches = [
     (fetchurl {
       url =
-        "https://raw.githubusercontent.com/pspdev/psptoolchain/master/patches/binutils-${BINUTILS_VERSION}-PSP.patch";
+        "https://raw.githubusercontent.com/pspdev/psptoolchain/bffc9c7ad096965813df3ad90620f43343805fd6/patches/binutils-${BINUTILS_VERSION}-PSP.patch";
       sha256 = "FV10md1l1JbsB23HHZPbnAwvnN8/quhnHZaWdTRr9Mk=";
     })
   ];

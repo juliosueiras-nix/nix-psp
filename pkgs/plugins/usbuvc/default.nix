@@ -11,11 +11,11 @@ stdenv.mkDerivation {
     echo "file psp-plugins $out/uvc.prx" >> $out/nix-support/hydra-build-products
   '';
 
-  src = fetchFromGitHub {
+  src = fetchTree {
     repo = "psp-uvc-usb-video-class";
     owner = "xerpi";
-    rev = "master";
-    sha256 = "yoILfJzloNB+J32diykdErJgCXsfJdJRAPmgtYgR77A=";
+    rev = "728b1f40475f6012431fef9cebf7096e06a5f711";
+    sha256 = "7xW5jU7GvA2cuPVzPZ5dzhFllBQXWoqhArvCx3p1pY8=";
   };
 
   dontStrip = true;
