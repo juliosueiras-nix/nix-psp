@@ -6,7 +6,7 @@ stdenv.mkDerivation {
   src = fetchTree {
     type = "git";
     url = "https://github.com/pspdev/gdb";
-    rev = "$(git rev-parse HEAD:)";
+    rev = "d773a3425a9b9d8d01d317b280a5eb2ca35e607c";
   };
 
   buildInputs = [ file texinfo pspsdk binutils readline.dev zlib.dev ];
