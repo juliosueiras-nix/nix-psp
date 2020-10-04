@@ -17,6 +17,7 @@ stdenv.mkDerivation {
     "--target=psp"
     "--disable-werror"
     "--disable-nls"
+    "--disable-binutils"
     "--with-system-zlib"
     "--with-system-readline"
   ];
