@@ -17,12 +17,13 @@ stdenv.mkDerivation {
     "--target=psp"
     "--disable-werror"
     "--disable-nls"
-    "--disable-binutils"
+    #"--disable-binutils"
     "--with-system-zlib"
     "--with-system-readline"
   ];
 
   preConfigure = ''
+    cd gdb
     mkdir build-psp
     cd build-psp
   '';
