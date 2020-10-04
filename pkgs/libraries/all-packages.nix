@@ -1,4 +1,4 @@
-{ lib, callPackage, newlibVersion, toolchain, ... }:
+{ lib, callPackage, allowCFWSDK, newlibVersion, toolchain, ... }:
 
 let
   buildLibrary = name:
@@ -54,7 +54,7 @@ let
     cmakeScript = callPackage ./cmake.nix { };
 
     thirdparty = import ./thirdparty/all-packages.nix {
-      inherit toolchain callPackage;
+      inherit toolchain callPackage allowCFWSDK;
     };
   });
 in lib.mergeAttrs mainLibraries (if newlibVersion != "3.3.0" then rec {

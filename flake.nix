@@ -13,7 +13,7 @@
         };
       };
     in {
-      createPSPSDK = { newlibVersion ? "1.20.0", ... }:
+      createPSPSDK = { newlibVersion ? "1.20.0", allowCFWSDK ? false, ... }:
       let
         toolchain = import ./pkgs/toolchain/default.nix {
           inherit (pkgs) callPackage fetchFromGitHub;
@@ -23,7 +23,7 @@
 
         libraries = import ./pkgs/libraries/all-packages.nix {
           inherit (pkgs) callPackage lib;
-          inherit toolchain newlibVersion;
+          inherit toolchain newlibVersion allowCFWSDK;
         };
       in {
         inherit toolchain pspsdk libraries;
@@ -33,8 +33,8 @@
         };
 
         plugins = import ./pkgs/plugins/all-packages.nix {
-          inherit (pkgs) callPackage;
-          inherit pspsdk libraries;
+          inherit (pkgs) callPackage lib;
+          inherit pspsdk libraries allowCFWSDK;
         };
 
         samples = import ./pkgs/samples/all-packages.nix {
@@ -44,9 +44,9 @@
       };
 
       hydraJobs = {
-        default = self.createPSPSDK { };
+        default = self.createPSPSDK { allowCFWSDK = true; };
 
-        withNewlib330 = self.createPSPSDK { newlibVersion = "3.3.0"; };
+        withNewlib330 = self.createPSPSDK { newlibVersion = "3.3.0"; allowCFWSDK = true; };
       };
     };
   }
