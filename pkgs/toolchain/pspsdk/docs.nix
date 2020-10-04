@@ -5,6 +5,10 @@ src: stdenv.mkDerivation {
 
   inherit src;
 
+  patchPhase = ''
+    substituteInPlace Doxyfile --replace "PROJECT_NAME           = $(PROJECT)" "PROJECT_NAME = PSPSDK" --replace "PROJECT_NUMBER         = $(VERSION)" "PROJECT_NUMBER = 1.0+${src.rev}"
+  '';
+
   buildPhase = ''
     ${doxygen}/bin/doxygen ./Doxyfile
   '';
