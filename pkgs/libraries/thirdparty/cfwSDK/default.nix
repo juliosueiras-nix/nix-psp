@@ -16,7 +16,7 @@ stdenvNoCC.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/psp/sdk/
-    cp -rf SDK/* $out/psp/sdk/
+    cp -rf SDK/{lib,include} $out/psp/sdk/
   '';
 
   dontStrip = true;
