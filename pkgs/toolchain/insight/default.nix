@@ -6,11 +6,12 @@ stdenv.mkDerivation {
 
   src = fetchTree {
     type = "tarball";
-    url = "https://github.com/pspdev/insight/3b4fd64838d5b69aca9400ebba0188da72e2bbb0.tar.gz";
+    url = "https://github.com/pspdev/insight/archive/3b4fd64838d5b69aca9400ebba0188da72e2bbb0.tar.gz";
+    narHash = "sha256-G6Qy+HR8rSEIsOKY0FqNIE8PJVXIHWMMr8eWq+0GVFI=";
   };
 
 
-  buildInputs = [ file texinfo4 pspsdk binutils x11 ncurses.dev ];
+  buildInputs = [ file texinfo4 pspsdk x11 ncurses.dev ];
 
   configureScript = "../configure";
 

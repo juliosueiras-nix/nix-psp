@@ -45,7 +45,7 @@ in rec {
     gdb = callPackage ./gdb/default.nix { inherit binutils pspsdk; };
 
     insight = callPackage ./insight/default.nix {
-      inherit stage2 binutils;
+      inherit (stage2) pspsdk;
     };
   };
 
