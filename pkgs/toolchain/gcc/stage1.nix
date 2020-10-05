@@ -1,4 +1,4 @@
-{ stdenv, lib, flex binutils, file, ... }:
+{ stdenv, lib, flex, binutils, file, ... }:
 
 let
   gccDepsLibs = import ./libs.nix;
