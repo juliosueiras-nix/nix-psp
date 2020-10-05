@@ -1,4 +1,4 @@
-{ stdenv, lib, binutils, file, ... }:
+{ stdenv, lib, flex binutils, file, ... }:
 
 let
   gccDepsLibs = import ./libs.nix;
@@ -11,7 +11,7 @@ in stdenv.mkDerivation {
     narHash = "sha256-6cHIEw5kbtJS+g2Mdo2WGiSgxXQM2/Y+K2zZMhqUxNc=";
   };
 
-  buildInputs = [ file binutils ];
+  buildInputs = [ file binutils flex ];
 
   configureScript = "../configure";
 
