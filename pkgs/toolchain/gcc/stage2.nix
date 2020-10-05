@@ -1,16 +1,15 @@
-{ stdenv, lib, fetchurl, binutils, stage1, file, ... }:
+{ stdenv, lib, binutils, stage1, file, ... }:
 
 let
-  GCC_VERSION = "9.3.0";
   gccDepsLibs = import ./libs.nix;
 in stdenv.mkDerivation {
   name = "psp-gcc";
-  src = fetchTarball {
-    url =
-      "https://ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.gz";
-    sha256 = "15cyd8gwcyy0cxd4iarb6ns3qfs6vywqhwi6f78sx9h9sr7q52qq";
-  };
 
+  src = fetchTree {
+    type = "git";
+    url = "https://github.com/pspdev/gcc";
+    rev = "9a856f00119f87b2927fa9d03279f3513e656a5d";
+  };
   buildInputs = [ file binutils ];
 
   configureScript = "../configure";
@@ -41,14 +40,6 @@ in stdenv.mkDerivation {
     mkdir build-psp
     cd build-psp
   '';
-
-  patches = [
-    (fetchurl {
-      url =
-        "https://raw.githubusercontent.com/pspdev/psptoolchain/bffc9c7ad096965813df3ad90620f43343805fd6/patches/gcc-${GCC_VERSION}-PSP.patch";
-      sha256 = "f3etsCyDAP9aYTBiKAFTQJY+M7SaQXcteiZZItc6n+w=";
-    })
-  ];
 
   dontDisableStatic = true;
   dontStrip = true;

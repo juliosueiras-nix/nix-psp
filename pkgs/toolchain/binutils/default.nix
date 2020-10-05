@@ -1,13 +1,12 @@
-{ stdenv, fetchurl, ... }:
+{ stdenv, ... }:
 
-let BINUTILS_VERSION = "2.23.2";
-in stdenv.mkDerivation {
+stdenv.mkDerivation {
   name = "psp-binutils";
 
-  src = fetchTarball {
-    url =
-      "https://ftp.gnu.org/pub/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.bz2";
-    sha256 = "10lsd4xj2pmjzafq4rzgpdawn2wkrwyzkb48wjlsm8dp5sx533lx";
+  src = fetchTree {
+    type = "git";
+    url = "https://github.com/pspdev/binutils";
+    rev = "b8577007c5e0a463b0fa9229efed59165ce13508";
   };
 
   configureFlags = [
@@ -15,14 +14,6 @@ in stdenv.mkDerivation {
     "--enable-install-libbfd"
     "--disable-werror"
     "--with-system-zlib"
-  ];
-
-  patches = [
-    (fetchurl {
-      url =
-        "https://raw.githubusercontent.com/pspdev/psptoolchain/bffc9c7ad096965813df3ad90620f43343805fd6/patches/binutils-${BINUTILS_VERSION}-PSP.patch";
-      sha256 = "FV10md1l1JbsB23HHZPbnAwvnN8/quhnHZaWdTRr9Mk=";
-    })
   ];
 
   dontStrip = true;
