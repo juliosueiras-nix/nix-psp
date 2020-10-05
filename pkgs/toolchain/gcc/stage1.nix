@@ -6,9 +6,8 @@ in stdenv.mkDerivation {
   name = "psp-gcc";
 
   src = fetchTree {
-    type = "git";
-    url = "https://github.com/pspdev/gcc";
-    rev = "9a856f00119f87b2927fa9d03279f3513e656a5d";
+    type = "tarball";
+    url = "https://github.com/pspdev/gcc/archive/9a856f00119f87b2927fa9d03279f3513e656a5d.tar.gz";
   };
 
   buildInputs = [ file binutils ];

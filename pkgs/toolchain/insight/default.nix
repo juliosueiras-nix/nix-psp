@@ -5,10 +5,10 @@ stdenv.mkDerivation {
   name = "psp-insight";
 
   src = fetchTree {
-    type = "git";
-    url = "https://github.com/pspdev/insight";
-    rev = ":b4fd64838d5b69aca9400ebba0188da72e2bbb0";
+    type = "tarball";
+    url = "https://github.com/pspdev/insight/3b4fd64838d5b69aca9400ebba0188da72e2bbb0.tar.gz";
   };
+
 
   buildInputs = [ file texinfo4 pspsdk binutils x11 ncurses.dev ];
 
