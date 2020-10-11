@@ -74,7 +74,7 @@
           in rec {
             srcCargoDeps = rustPlatform.fetchCargoTarball {
               name = "test";
-              sourceRoot = ".";
+              sourceRoot = null;
               unpackPhase = null;
               src = let
                 cargoFile = pkgs.writeText "cargo-file" ''
@@ -93,7 +93,7 @@
                   chmod a+rw Cargo.*
                 '';
               };
-              sha256 = "DeF79IL7P8e4iy4uKGBkPy3ViIlc1ydnOqDuObN1RyA=";
+              sha256 = null;
             };
 
             cargo-psp = rustPlatform.buildRustPackage {
@@ -107,6 +107,63 @@
                 version = "0.0.1";
                 sha256 = "B3xme7kVhhz02WuF0VXeFETJD05AFsniNvfH3iFq2S0=";
               };
+            };
+
+            libpsp-test = let
+              xargo-toml = pkgs.lib.generators.toINI {} {                       
+                "target.mipsel-sony-psp.dependencies.alloc" = {};
+                "target.mipsel-sony-psp.dependencies.core" = {};
+                "target.mipsel-sony-psp.dependencies.panic_unwind" = {
+                  stage = 1;
+                };
+              };
+            in pkgs.stdenv.mkDerivation {
+              name = "libpsp";
+
+              buildInputs = [
+                cargo-psp
+                xargo
+                rustPlatform.rust.rustc
+                rustPlatform.rust.cargo
+                pkgs.git
+              ];
+
+              buildPhase = ''
+                substituteInPlace Cargo.toml --replace ', "cargo-psp"' '''
+
+                pushd .
+                cd psp
+                export XARGO_HOME="$TMPDIR/.xargo"
+                export CARGO_HOME="$TMPDIR/.cargo"
+                xargo rustc --features stub-only --target mipsel-sony-psp -- -C opt-level=3 -C panic=abort
+                popd
+              '';
+
+              __noChroot = true;
+              impureEnvVars = pkgs.stdenv.lib.fetchers.proxyImpureEnvVars;
+              CARGO_NET_GIT_FETCH_WITH_CLI = "true";
+              GIT_SSL_CAINFO = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+
+              dontStrip = true;
+              dontPatchELF = true;
+
+              installPhase = ''
+                mkdir -p $out/psp/sdk/lib
+                cp target/mipsel-sony-psp/debug/libpsp.a $out/psp/sdk/lib
+              '';
+
+              src = (pkgs.applyPatches {
+                name = "rust-psp-src";
+                src = fetchTree {
+                  type = "git";
+                  url = "https://github.com/overdrivenpotato/rust-psp";
+                  rev = "20a0a73eccb26c80950a623eef11ef7ffd4630bb";
+                };
+
+                postPatch = ''
+                  echo "${xargo-toml}" > psp/Xargo.toml
+                '';
+              });
             };
 
             libpsp = let
@@ -127,15 +184,16 @@
 
               checkPhase = "true";
 
+
               buildPhase = ''
                 substituteInPlace Cargo.toml --replace ', "cargo-psp"' '''
 
                 pushd . 
-                cd ../$(stripHash $cargoDeps)
-                cp ${srcCargoDeps} src.tar.gz
-                tar zxvf src.tar.gz
-                rm test-vendor.tar.gz/Cargo.lock
-                cp -rf test-vendor.tar.gz/* .
+                #cd ../$(stripHash $cargoDeps)
+                #cp ${srcCargoDeps} src.tar.gz
+                #tar zxvf src.tar.gz
+                #rm test-vendor.tar.gz/Cargo.lock
+                #cp -rf test-vendor.tar.gz/* .
                 popd
 
                 pushd .
@@ -153,8 +211,6 @@
                 cp target/mipsel-sony-psp/debug/libpsp.a $out/psp/sdk/lib
               '';
 
-              cargoSha256 = "il0khy9y7WF7WNZGoR/KcZKtwmH4nndIWhSd0TAjG9Q=";
-
               src = (pkgs.applyPatches {
                 name = "rust-psp-src";
                 src = fetchTree {
@@ -165,7 +221,7 @@
 
                 postPatch = ''
                   echo "${xargo-toml}" > psp/Xargo.toml
-                  cp ${./Cargo.lock} Cargo.lock
+                  #cp ${./Cargo.lock} Cargo.lock
                 '';
               });
             };
