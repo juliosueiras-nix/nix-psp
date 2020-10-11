@@ -5,9 +5,9 @@ let
     overlays = [ (import <nixpkgs-mozilla>) ];
   };
 in {
-  result = (import <src/lib.nix> {
+  result = import <src/lib.nix> {
     inherit pkgs;
-  }).createPSPSDK  {
+  } {
     allowCFWSDK = true;
   };
 }
