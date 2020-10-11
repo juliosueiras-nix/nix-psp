@@ -42,10 +42,10 @@
             inherit pspsdk libraries allowCFWSDK;
           };
 
-          testSrc = fetchGit {
-            url = "https://github.com/juliosueiras/terraform-lsp";
-            ref = "master";
-          };
+          #testSrc = fetchGit {
+          #  url = "https://github.com/juliosueiras/terraform-lsp";
+          #  ref = "master";
+          #};
 
           samples = import ./pkgs/samples/all-packages.nix {
             inherit (pkgs) callPackage lib runCommand;
@@ -166,65 +166,65 @@
               });
             };
 
-            libpsp = let
-              xargo-toml = pkgs.lib.generators.toINI {} {                       
-                "target.mipsel-sony-psp.dependencies.alloc" = {};
-                "target.mipsel-sony-psp.dependencies.core" = {};
-                "target.mipsel-sony-psp.dependencies.panic_unwind" = {
-                  stage = 1;
-                };
-              };
-            in rustPlatform.buildRustPackage {
-              name = "libpsp";
+            #libpsp = let
+            #  xargo-toml = pkgs.lib.generators.toINI {} {                       
+            #    "target.mipsel-sony-psp.dependencies.alloc" = {};
+            #    "target.mipsel-sony-psp.dependencies.core" = {};
+            #    "target.mipsel-sony-psp.dependencies.panic_unwind" = {
+            #      stage = 1;
+            #    };
+            #  };
+            #in rustPlatform.buildRustPackage {
+            #  name = "libpsp";
 
-              buildInputs = [
-                cargo-psp
-                xargo
-              ];
+            #  buildInputs = [
+            #    cargo-psp
+            #    xargo
+            #  ];
 
-              checkPhase = "true";
+            #  checkPhase = "true";
 
 
-              buildPhase = ''
-                substituteInPlace Cargo.toml --replace ', "cargo-psp"' '''
+            #  buildPhase = ''
+            #    substituteInPlace Cargo.toml --replace ', "cargo-psp"' '''
 
-                pushd . 
-                #cd ../$(stripHash $cargoDeps)
-                #cp ${srcCargoDeps} src.tar.gz
-                #tar zxvf src.tar.gz
-                #rm test-vendor.tar.gz/Cargo.lock
-                #cp -rf test-vendor.tar.gz/* .
-                popd
+            #    pushd . 
+            #    #cd ../$(stripHash $cargoDeps)
+            #    #cp ${srcCargoDeps} src.tar.gz
+            #    #tar zxvf src.tar.gz
+            #    #rm test-vendor.tar.gz/Cargo.lock
+            #    #cp -rf test-vendor.tar.gz/* .
+            #    popd
 
-                pushd .
-                cd psp
-                export XARGO_HOME="$TMPDIR/.xargo"
-                xargo rustc --features stub-only --target mipsel-sony-psp -- -C opt-level=3 -C panic=abort
-                popd
-              '';
+            #    pushd .
+            #    cd psp
+            #    export XARGO_HOME="$TMPDIR/.xargo"
+            #    xargo rustc --features stub-only --target mipsel-sony-psp -- -C opt-level=3 -C panic=abort
+            #    popd
+            #  '';
 
-              dontStrip = true;
-              dontPatchELF = true;
+            #  dontStrip = true;
+            #  dontPatchELF = true;
 
-              installPhase = ''
-                mkdir -p $out/psp/sdk/lib
-                cp target/mipsel-sony-psp/debug/libpsp.a $out/psp/sdk/lib
-              '';
+            #  installPhase = ''
+            #    mkdir -p $out/psp/sdk/lib
+            #    cp target/mipsel-sony-psp/debug/libpsp.a $out/psp/sdk/lib
+            #  '';
 
-              src = (pkgs.applyPatches {
-                name = "rust-psp-src";
-                src = fetchTree {
-                  type = "git";
-                  url = "https://github.com/overdrivenpotato/rust-psp";
-                  rev = "20a0a73eccb26c80950a623eef11ef7ffd4630bb";
-                };
+            #  src = (pkgs.applyPatches {
+            #    name = "rust-psp-src";
+            #    src = fetchTree {
+            #      type = "git";
+            #      url = "https://github.com/overdrivenpotato/rust-psp";
+            #      rev = "20a0a73eccb26c80950a623eef11ef7ffd4630bb";
+            #    };
 
-                postPatch = ''
-                  echo "${xargo-toml}" > psp/Xargo.toml
-                  #cp ${./Cargo.lock} Cargo.lock
-                '';
-              });
-            };
+            #    postPatch = ''
+            #      echo "${xargo-toml}" > psp/Xargo.toml
+            #      #cp ${./Cargo.lock} Cargo.lock
+            #    '';
+            #  });
+            #};
 
             compiler_builtins = rustPlatform.buildRustPackage {
               pname = "compiler_builtins";
