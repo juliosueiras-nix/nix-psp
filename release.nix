@@ -1,6 +1,6 @@
 { ... }: 
 
 let
-  #nixpkgs = (import <nixpkgs>);
-  #nixpkgs-mozilla = (import <nixpkgs-mozilla>);
-in (import <src/flake.nix> {})
+  nixpkgs = (import <nixpkgs>);
+  nixpkgs-mozilla = (import <nixpkgs-mozilla>);
+in nixpkgs
