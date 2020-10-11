@@ -117,7 +117,7 @@ in {
         popd
       '';
 
-      __noChroot = true;
+      #__noChroot = true;
       impureEnvVars = pkgs.stdenv.lib.fetchers.proxyImpureEnvVars;
       CARGO_NET_GIT_FETCH_WITH_CLI = "true";
       GIT_SSL_CAINFO = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
