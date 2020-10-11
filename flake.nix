@@ -42,10 +42,10 @@
             inherit pspsdk libraries allowCFWSDK;
           };
 
-          #testSrc = fetchGit {
-          #  url = "https://github.com/juliosueiras/terraform-lsp";
-          #  ref = "master";
-          #};
+          testSrc = fetchGit {
+            url = "https://github.com/juliosueiras/terraform-lsp";
+            ref = "master";
+          };
 
           samples = import ./pkgs/samples/all-packages.nix {
             inherit (pkgs) callPackage lib runCommand;
