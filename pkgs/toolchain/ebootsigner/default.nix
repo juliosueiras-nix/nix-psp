@@ -3,12 +3,14 @@
 stdenv.mkDerivation {
   name = "ebootsigner";
 
-  src = fetchFromGitHub {
-    repo = "ebootsigner";
-    owner = "pspdev";
+  src = fetchGit {
+    url = "https://github.com/pspdev/ebootsigner";
+    ref = "master";
+    #repo = "ebootsigner";
+    #owner = "pspdev";
 
-    rev = "e32f268f17e10a9421b96211b5ee076dc976caa4";
-    sha256 = "1qdm08ppArz5p7XwnMYawcM5DNghIqNzHZU7EmUW8hs=";
+    #rev = "e32f268f17e10a9421b96211b5ee076dc976caa4";
+    #sha256 = "1qdm08ppArz5p7XwnMYawcM5DNghIqNzHZU7EmUW8hs=";
   };
 
   buildInputs = [ pspsdk ];

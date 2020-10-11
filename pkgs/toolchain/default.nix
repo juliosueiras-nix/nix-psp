@@ -10,7 +10,11 @@ let
 in rec {
   inherit pspsdkSrc;
 
-  binutils = callPackage ./binutils/default.nix { };
+  clangToolchain = import ./clang/default.nix {
+    inherit callPackage;
+  };
+
+  binutils = callPackage ./binutils/default.nix {};
 
   stage1 = {
     gcc = callPackage ./gcc/stage1.nix { inherit binutils; };

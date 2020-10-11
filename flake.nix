@@ -4,49 +4,231 @@
   inputs.nixpkgs.url =
     "github:NixOS/nixpkgs/469f14ef0fade3ae4c07e4977638fdf3afc29e08";
 
-    outputs = { self, nixpkgs }:
-    let 
+  inputs.nixpkgs-mozilla = {
+    url =
+      "github:mozilla/nixpkgs-mozilla/efda5b357451dbb0431f983cca679ae3cd9b9829";
+    flake = false;
+  };
+
+  outputs = { self, nixpkgs, nixpkgs-mozilla }:
+    let
       pkgs = import nixpkgs {
         system = "x86_64-linux";
-        config = {
-          allowUnfree = true;
-        };
+        config = { allowUnfree = true; };
+        overlays = [ (import nixpkgs-mozilla) ];
       };
     in {
       createPSPSDK = { newlibVersion ? "1.20.0", allowCFWSDK ? false, ... }:
-      let
-        toolchain = import ./pkgs/toolchain/default.nix {
-          inherit (pkgs) callPackage fetchFromGitHub;
-          inherit newlibVersion;
-        };
-        pspsdk = toolchain.stage2.pspsdk;
+        let
+          toolchain = import ./pkgs/toolchain/default.nix {
+            inherit (pkgs) callPackage fetchFromGitHub;
+            inherit newlibVersion;
+          };
+          pspsdk = toolchain.stage2.pspsdk;
 
-        libraries = import ./pkgs/libraries/all-packages.nix {
-          inherit (pkgs) callPackage lib;
-          inherit toolchain newlibVersion allowCFWSDK;
-        };
-      in {
-        inherit toolchain pspsdk libraries;
-        homebrew = import ./pkgs/homebrew/all-packages.nix {
-          inherit (pkgs) callPackage;
-          inherit pspsdk libraries;
-        };
+          libraries = import ./pkgs/libraries/all-packages.nix {
+            inherit (pkgs) callPackage lib;
+            inherit toolchain newlibVersion allowCFWSDK;
+          };
+        in {
+          inherit toolchain pspsdk libraries;
+          homebrew = import ./pkgs/homebrew/all-packages.nix {
+            inherit (pkgs) callPackage;
+            inherit pspsdk libraries;
+          };
 
-        plugins = import ./pkgs/plugins/all-packages.nix {
-          inherit (pkgs) callPackage lib;
-          inherit pspsdk libraries allowCFWSDK;
-        };
+          plugins = import ./pkgs/plugins/all-packages.nix {
+            inherit (pkgs) callPackage lib;
+            inherit pspsdk libraries allowCFWSDK;
+          };
 
-        samples = import ./pkgs/samples/all-packages.nix {
-          inherit (pkgs) callPackage lib runCommand;
-          inherit toolchain;
+          samples = import ./pkgs/samples/all-packages.nix {
+            inherit (pkgs) callPackage lib runCommand;
+            inherit toolchain;
+          };
+
+          testingRustPSP = let
+            rustChannel = (pkgs.rustChannelOf {
+              channel = "nightly";
+              date = "2020-10-07";
+              sha256 = "juFd+PkbbaM8ULbmgz+W/F336Lis1MNuC8eDYsEqv0A=";
+            });
+            rustPlatform = pkgs.makeRustPlatform {
+              cargo = rustChannel.rust.override {
+                extensions = ["rust-src" "rust-std" "rustc-dev"];
+
+              };
+              rustc = rustChannel.rust.override {
+                extensions = ["rust-src" "rust-std" "rustc-dev"];
+              };
+            };
+          in rec {
+            rustSrc = rustChannel.rust.override {
+              extensions = ["rust-src" "rust-std"];
+            };
+
+            rustS = rustPlatform.rustcSrc;
+
+            inherit rustPlatform;
+
+
+            srcCargoDeps = rustPlatform.fetchCargoTarball {
+              name = "test";
+              sourceRoot = null;
+              unpackPhase = null;
+              src = let
+                cargoFile = pkgs.writeText "cargo-file" ''
+                  [workspace]
+                  members = [
+                    "library/std",
+                  ]
+                '';
+              in pkgs.applyPatches {
+                name = "rust-src";
+                src = "${rustSrc}/lib/rustlib/src/rust";
+                postPatch = ''
+                  cp ${cargoFile} Cargo.toml
+                  rm Cargo.lock
+                  cp ${rustSrc}/lib/rustlib/src/rust/Cargo.lock Cargo.lock
+                  chmod a+rw Cargo.*
+                '';
+              };
+              sha256 = "DeF79IL7P8e4iy4uKGBkPy3ViIlc1ydnOqDuObN1RyA=";
+            };
+
+            cargo-psp = rustPlatform.buildRustPackage {
+              pname = "cargo-psp";
+              version = "0.0.1";
+
+              cargoSha256 = "KWdTQEnVSL+0Ff7M1aUM5sZ0MH15qrV9VVJOt2BWQJE=";
+
+              src = pkgs.fetchCrate {
+                crateName = "cargo-psp";
+                version = "0.0.1";
+                sha256 = "B3xme7kVhhz02WuF0VXeFETJD05AFsniNvfH3iFq2S0=";
+              };
+            };
+
+            libpsp = let
+              xargo-toml = pkgs.lib.generators.toINI {} {                       
+                "target.mipsel-sony-psp.dependencies.alloc" = {};
+                "target.mipsel-sony-psp.dependencies.core" = {};
+                "target.mipsel-sony-psp.dependencies.panic_unwind" = {
+                  stage = 1;
+                };
+              };
+            in rustPlatform.buildRustPackage {
+              name = "libpsp";
+
+              buildInputs = [
+                cargo-psp
+                xargo
+              ];
+
+              checkPhase = "true";
+
+              buildPhase = ''
+                substituteInPlace Cargo.toml --replace ', "cargo-psp"' '''
+
+                pushd . 
+                cd ../$(stripHash $cargoDeps)
+                cp ${srcCargoDeps} src.tar.gz
+                tar zxvf src.tar.gz
+                rm test-vendor.tar.gz/Cargo.lock
+                cp -rf test-vendor.tar.gz/* .
+                popd
+
+                pushd .
+                cd psp
+                export XARGO_HOME="$TMPDIR/.xargo"
+                xargo rustc --features stub-only --target mipsel-sony-psp -- -C opt-level=3 -C panic=abort
+                popd
+              '';
+
+              dontStrip = true;
+              dontPatchELF = true;
+
+              installPhase = ''
+                mkdir -p $out/psp/sdk/lib
+                cp target/mipsel-sony-psp/debug/libpsp.a $out/psp/sdk/lib
+              '';
+
+              cargoSha256 = "il0khy9y7WF7WNZGoR/KcZKtwmH4nndIWhSd0TAjG9Q=";
+
+              src = (pkgs.applyPatches {
+                name = "rust-psp-src";
+                src = fetchTree {
+                  type = "git";
+                  url = "https://github.com/overdrivenpotato/rust-psp";
+                  rev = "20a0a73eccb26c80950a623eef11ef7ffd4630bb";
+                };
+
+                postPatch = ''
+                  echo "${xargo-toml}" > psp/Xargo.toml
+                  cp ${./Cargo.lock} Cargo.lock
+                '';
+              });
+            };
+
+            compiler_builtins = rustPlatform.buildRustPackage {
+              pname = "compiler_builtins";
+              version = "0.1.35";
+
+              cargoSha256 = "qybEthOgivaWzW9G3e3PYK5JWRfDNMLnvNBMZ8MSEIk=";
+              checkPhase = "true";
+
+              src = pkgs.fetchCrate {
+                crateName = "compiler_builtins";
+                version = "0.1.35";
+                sha256 = "QO6U8DsefgGtI6JfPlnp1SoBZPCcbJ+hQUOcpGhf6iQ=";
+              };
+            };
+
+            cargo-xbuild = rustPlatform.buildRustPackage {
+              name = "cargo-xbuild";
+
+              cargoSha256 = "NAhMT20VwXm6zCAACOouEM8EB96S8q6HMFe+XKIDfUU=";
+              checkPhase = "true";
+
+              src = fetchTree {
+                type = "git";
+                url = "https://github.com/rust-osdev/cargo-xbuild";
+                rev = "6125d0a1e475343d7224895457ea3a19b498ce12";
+              };
+            };
+
+            xargo = rustPlatform.buildRustPackage {
+              pname = "xargo";
+              version = "0.3.22";
+
+              cargoSha256 = "rw/V61vnQrAL6h+Husq+/JjGpIX1Yzo6ojoWSlTpzCs=";
+              checkPhase = "true";
+
+              src = pkgs.fetchCrate {
+                crateName = "xargo";
+                version = "0.3.22";
+                sha256 = "cpJSyCl+a0m+FbyCRhvqvk9E+LVA6eQ8NGeu7t0ATPU=";
+              };
+            };
+          };
         };
-      };
 
       hydraJobs = {
         default = self.createPSPSDK { allowCFWSDK = true; };
+        withNewlib330 = self.createPSPSDK {
+          newlibVersion = "3.3.0";
+          allowCFWSDK = true;
+        };
+      };
 
-        withNewlib330 = self.createPSPSDK { newlibVersion = "3.3.0"; allowCFWSDK = true; };
+      devShell.x86_64-linux = let
+        toolchain = self.createPSPSDK {
+          allowCFWSDK = true;
+        };
+      in pkgs.mkShell {
+        XARGO_RUST_SRC = "${toolchain.testingRustPSP.rustSrc}/lib/rustlib/src/rust/library";
+        
+        buildInputs = [ toolchain.testingRustPSP.rustSrc toolchain.testingRustPSP.cargo-psp toolchain.testingRustPSP.xargo pkgs.carnix];
       };
     };
-  }
+}
