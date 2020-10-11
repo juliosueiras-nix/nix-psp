@@ -74,7 +74,7 @@
 
             srcCargoDeps = rustPlatform.fetchCargoTarball {
               name = "test";
-              sourceRoot = null;
+              sourceRoot = ".";
               unpackPhase = null;
               src = let
                 cargoFile = pkgs.writeText "cargo-file" ''
