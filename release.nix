@@ -1,7 +1,12 @@
-{
+let
+  pkgs = import <nixpkgs> {
+    system = "x86_64-linux";
+    config = { allowUnfree = true; };
+    overlays = [ (import <nixpkgs-mozilla>) ];
+  };
+in {
   result = (import <src/lib.nix> {
-    nixpkgs = (<nixpkgs>);
-    nixpkgs-mozilla = (<nixpkgs-mozilla>);
+    inherit pkgs;
   }).createPSPSDK  {
     allowCFWSDK = true;
   };
