@@ -1,7 +1,9 @@
+with import <nixpkgs> {};
+
 let
-  src = fetchGit {
+  src = fetchgit {
     url = "https://github.com/juliosueiras-nix/nix-psp";
-    ref = "refs/heads/master";
+    ref = "master";
   };
 in {
   test = (builtins.getFlake("git+https://github.com/juliosueiras-nix/nix-psp?ref=${src.rev}")).outputs.hydraJobs;
