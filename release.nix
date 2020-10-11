@@ -1,4 +1,4 @@
 let
-  nixpkgs = (import <nixpkgs>);
-  nixpkgs-mozilla = (import <nixpkgs-mozilla>);
+  nixpkgs = (<nixpkgs>);
+  nixpkgs-mozilla = (<nixpkgs-mozilla>);
 in nixpkgs
