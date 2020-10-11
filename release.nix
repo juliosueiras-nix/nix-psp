@@ -6,5 +6,5 @@ let
     rev = "master";
   };
 in {
-  test = (builtins.getFlake("git+https://github.com/juliosueiras-nix/nix-psp?ref=${src.rev}")).outputs.hydraJobs;
+  test = (builtins.getFlake("github:juliosueiras-nix/nix-psp/${src.rev}")).outputs.hydraJobs;
 }
