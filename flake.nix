@@ -62,16 +62,11 @@
                 extensions = ["rust-src" "rust-std" "rustc-dev"];
               };
             };
-          in rec {
+
             rustSrc = rustChannel.rust.override {
               extensions = ["rust-src" "rust-std"];
             };
-
-            rustS = rustPlatform.rustcSrc;
-
-            inherit rustPlatform;
-
-
+          in rec {
             srcCargoDeps = rustPlatform.fetchCargoTarball {
               name = "test";
               sourceRoot = ".";
