@@ -1,14 +1,9 @@
-{ stdenv, lib, which, pspsdk, binutils, texinfo4, readline, ncurses, libusb, file, ... }:
+{ src, stdenv, lib, which, pspsdk, binutils, texinfo4, readline, ncurses, libusb, file, ... }:
 
 stdenv.mkDerivation {
   name = "psplinkusb";
 
-  src = fetchTree {
-    type = "git";
-    url = "https://github.com/pspdev/psplinkusb";
-    rev = "9a9512ed115c3415ac953b64613d53283a75ada9";
-    #sha256 = "PGEwA3KYYksAuG7AMJVbqHbwE6dIMO2WnGnnUEiln04=";
-  };
+  inherit src;
 
   buildInputs = [ file texinfo4 pspsdk binutils readline ncurses libusb ];
 

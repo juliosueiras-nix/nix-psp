@@ -1,15 +1,11 @@
-{ stdenv, lib, flex, binutils, file, ... }:
+{ src, stdenv, lib, flex, binutils, file, ... }:
 
 let
   gccDepsLibs = import ./libs.nix;
 in stdenv.mkDerivation {
   name = "psp-gcc";
 
-  src = fetchTree {
-    type = "tarball";
-    url = "https://github.com/pspdev/gcc/archive/9a856f00119f87b2927fa9d03279f3513e656a5d.tar.gz";
-    narHash = "sha256-6cHIEw5kbtJS+g2Mdo2WGiSgxXQM2/Y+K2zZMhqUxNc=";
-  };
+  inherit src;
 
   buildInputs = [ file binutils flex ];
 
