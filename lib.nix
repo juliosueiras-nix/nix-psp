@@ -26,7 +26,12 @@ in {
   samples = import ./pkgs/samples/all-packages.nix {
     inherit (pkgs) callPackage lib runCommand;
     inherit toolchain;
-    pspsdkSrc = if impureMode then srcs.toolchain.pspsdk else toolchain.pspsdkSrc;
+    pspsdkSrc = if impureMode then srcs.toolchain.pspsdk else fetchFromGitHub {
+      repo = "pspsdk";
+      owner = "pspdev";
+      rev = "b80410f008f185e73d166d304eb3c3942e1d1d61";
+      sha256 = "fd0NuO7DM/Oy5eVT1sjADAn2yJ4N3AABwYSQrVxN36Y=";
+    };
   };
 
   #testingRustPSP = let
