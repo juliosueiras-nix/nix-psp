@@ -1,4 +1,4 @@
-{ src, cacert, xargo-toml, stdenv, cargo-psp, xargo, rustPlatform, git, applyPatches, fetchCrate, ... }:
+{ src, cacert, xargo-toml, stdenv, rustPlatform, git, applyPatches, fetchCrate, ... }:
 
 let
   deps = import ./deps.nix {
