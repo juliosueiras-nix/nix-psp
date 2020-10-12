@@ -30,7 +30,7 @@ let
   newlibSrc = if impureMode then srcs.toolchain.newlib."${newlibVersion}" else fetchFromGitHub {
     repo = "newlib";
     owner = "pspdev";
-    inherit (versions."${newlibVersion}") rev sha256;
+    inherit (newLibVersions."${newlibVersion}") rev sha256;
   };
 in rec {
   inherit pspsdkSrc;
