@@ -44,7 +44,7 @@ let
       libraries = [ zlib ];
     };
     libbulletml = buildLibrary "libbulletml" {
-      src = "${psp-ports}/libbulletml";
+      src = "${psp-ports}/libbulletml/src";
     };
     jpeg = buildLibrary "jpeg" {
       src = "${psp-ports}/jpeg";
