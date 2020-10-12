@@ -107,7 +107,7 @@ in rec {
           type = "git";
           url = "https://github.com/pspdev/psplinkusb";
           rev = "9a9512ed115c3415ac953b64613d53283a75ada9";
-          sha256 = "PGEwA3KYYksAuG7AMJVbqHbwE6dIMO2WnGnnUEiln04=";
+          narHash = "sha256-PGEwA3KYYksAuG7AMJVbqHbwE6dIMO2WnGnnUEiln04=";
         };
       };
 
