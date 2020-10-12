@@ -16,8 +16,10 @@ let
       psplinkusb = (<psplinkusb>);
       binutils = (<binutils>);
       gcc = (<gcc>);
-      newlib-1_20_0 = (<newlib-1_20_0>);
-      newlib-3_3_0 = (<newlib-3_3_0>);
+      newlib = {
+        "3.3.0" = (<newlib-3_3_0>);
+        "1.20.0" = (<newlib-1_20_0>);
+      };
       gdb = (<gdb>);
       ebootsigner = (<ebootsigner>);
       psp-pkgconf = (<psp-pkgconf>);
