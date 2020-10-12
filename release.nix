@@ -10,6 +10,9 @@ let
   }; 
 
   srcs = {
+    clang = {
+      rust-psp = (<rust-psp>);
+    };
     libraries = {
       SDL = {
         gfx = (<SDL_gfx>);
