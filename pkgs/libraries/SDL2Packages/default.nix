@@ -1,4 +1,4 @@
-{ srcs, impureMode, pspsdk, callPackage, libraries, ... }:
+{ srcs, impureMode, pspsdk, fetchFromGitHub, callPackage, libraries, ... }:
 
 {
   gfx = callPackage ./gfx.nix {

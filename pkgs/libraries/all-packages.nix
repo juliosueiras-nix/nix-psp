@@ -62,14 +62,14 @@ let
 
     SDL = buildLibrary "SDL" { src = null; libraries = [ pspirkeyb ]; };
     SDLPackages = import ./SDLPackages/default.nix {
-      inherit callPackage impureMode srcs;
+      inherit callPackage fetchFromGitHub impureMode srcs;
       inherit (toolchain) pspsdk;
       libraries = { inherit SDL libmikmod libpng jpeg freetype; };
     };
 
     SDL2 = buildLibrary "SDL2" { src = null; libraries = [ pspgl libpspvram ]; };
     SDL2Packages = import ./SDL2Packages/default.nix {
-      inherit callPackage;
+      inherit callPackage fetchFromGitHub impureMode srcs;
       inherit (toolchain) pspsdk;
       libraries = { inherit SDL2 libmikmod libpng jpeg freetype; };
     };
