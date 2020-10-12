@@ -2,11 +2,11 @@
 
 let
   buildSample = callPackage ./function.nix {
-    inherit (toolchain) pspsdkSrc pspsdk;
+    inherit (toolchain) pspsdk-src pspsdk;
   };
 
   generateSamples = import ./lib.nix { 
     inherit lib buildSample runCommand; 
-    inherit (toolchain) pspsdkSrc; 
+    inherit (toolchain) pspsdk-src; 
   };
 in generateSamples

@@ -33,7 +33,7 @@ let
     inherit (newLibVersions."${newlibVersion}") rev sha256;
   };
 in rec {
-  pspsdkSrc = "${pspsdkSrc}";
+  pspsdk-src = "${pspsdkSrc}";
 
   #clangToolchain = import ./clang/default.nix {
   #  inherit callPackage;

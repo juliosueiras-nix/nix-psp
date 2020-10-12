@@ -1,10 +1,10 @@
-{ stdenv, pspsdkSrc, pspsdk, ... }:
+{ stdenv, pspsdk-src, pspsdk, ... }:
 
 { name, src, ... }:
 stdenv.mkDerivation {
   inherit name;
 
-  src = "${pspsdkSrc}/src/samples";
+  src = "${pspsdk-src}/src/samples";
 
   buildInputs = [ pspsdk ];
 
