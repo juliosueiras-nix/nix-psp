@@ -85,7 +85,7 @@ let
     libyaml = buildLibrary "libyaml" { src = null; };
     pixman = buildLibrary "pixman" { src = null; libraries = [ libpng ]; };
     opentri = buildLibrary "opentri" { src = null; libraries = [ zlib freetype libpng ]; };
-    angelscript = buildLibrary "angelscript" { libraries = [ cmakeScript ]; };
+    angelscript = buildLibrary "angelscript" { src =null; libraries = [ cmakeScript ]; };
 
     libpspvram = buildLibrary "libpspvram" {
       src = if impureMode then srcs.libraries.libpspvram else fetchFromGitHub {
