@@ -1,16 +1,8 @@
-{ stdenv, libtool, automake, autoconf, fetchFromGitHub, pspsdk, ... }:
+{ src, stdenv, libtool, automake, autoconf, fetchFromGitHub, pspsdk, ... }:
 
 stdenv.mkDerivation {
   name = "libtremor";
-
-  src = "${
-      fetchFromGitHub {
-        repo = "psp-ports";
-        owner = "pspdev";
-        rev = "8804b97c955a156e75f1b552b8a5aae9713f674f";
-        sha256 = "x09wM/AfeYgKoTRmxsr7iEG84VLzP2DCksAeHVWRCh0=";
-      }
-    }/libTremor";
+  inherit src;
 
   buildInputs = [ pspsdk libtool automake autoconf ];
 

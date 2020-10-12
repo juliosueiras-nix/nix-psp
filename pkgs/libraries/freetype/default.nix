@@ -1,15 +1,9 @@
-{ stdenv, libtool, automake, autoconf, callPackage, fetchFromGitHub, pspsdk, ...
+{ src, stdenv, libtool, automake, autoconf, callPackage, fetchFromGitHub, pspsdk, ...
 }:
 
 stdenv.mkDerivation {
   name = "freetype";
-
-  src = fetchFromGitHub {
-    repo = "freetype2";
-    owner = "pspdev";
-    rev = "freetype2-psp";
-    sha256 = "p6phT3SYRlsnbhauXV/haL2WY5ZyU0FXZhEAJcSe7Oo=";
-  };
+  inherit src;
 
   buildInputs = [ libtool automake autoconf pspsdk ];
 

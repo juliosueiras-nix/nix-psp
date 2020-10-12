@@ -1,14 +1,8 @@
-{ stdenv, autoconf, automake, fetchFromGitHub, pspsdk, ... }:
+{ src, stdenv, autoconf, automake, fetchFromGitHub, pspsdk, ... }:
 
 stdenv.mkDerivation {
   name = "SDL2_mixer";
-
-  src = fetchFromGitHub {
-    repo = "SDL_mixer";
-    owner = "pspdev";
-    rev = "SDL2_mixer-psp";
-    sha256 = "W+wLg4piO6ZfZEwQtf8CjhUGBBqHNr2gcM39IEkKBhk=";
-  };
+  inherit src;
 
   buildInputs = [ autoconf automake pspsdk ];
 

@@ -8,7 +8,7 @@ let
   pspsdk = toolchain.stage2.pspsdk;
 
   libraries = import ./pkgs/libraries/all-packages.nix {
-    inherit (pkgs) callPackage lib;
+    inherit (pkgs) callPackage fetchFromGitHub lib;
     inherit toolchain newlibVersion allowCFWSDK impureMode srcs;
   };
 in {

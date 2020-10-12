@@ -1,14 +1,8 @@
-{ stdenv, autoconf, automake, fetchFromGitHub, pspsdk, ... }:
+{ src, stdenv, autoconf, automake, fetchFromGitHub, pspsdk, ... }:
 
 stdenv.mkDerivation {
   name = "SDL2_image";
-
-  src = fetchFromGitHub {
-    repo = "SDL_image";
-    owner = "pspdev";
-    rev = "SDL2_image-psp";
-    sha256 = "nph9RWxj/tWYtj/jcGw6ThM8LiaVjb1PoFo+mIZQkys=";
-  };
+  inherit src;
 
   buildInputs = [ autoconf automake pspsdk ];
 

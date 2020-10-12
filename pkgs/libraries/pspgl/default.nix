@@ -1,14 +1,9 @@
-{ stdenv, fetchFromGitHub, pspsdk, ... }:
+{ src, stdenv, fetchFromGitHub, pspsdk, ... }:
 
 stdenv.mkDerivation {
   name = "pspgl";
 
-  src = fetchFromGitHub {
-    repo = "pspgl";
-    owner = "pspdev";
-    rev = "30ffef7bb75ba70eccede93288d7bb429a2e4709";
-    sha256 = "o9Cu5Ywer+HbNp0iZ5VDKyP35326+op4LxP0asWO4kI=";
-  };
+  inherit src;
 
   buildInputs = [ pspsdk ];
 

@@ -10,6 +10,26 @@ let
   }; 
 
   srcs = {
+    libraries = {
+      SDL = {
+        gfx = (<SDL_gfx>);
+        image = (<SDL_image>);
+        ttf = (<SDL_ttf>);
+        mixer = (<SDL_mixer>);
+      };
+      SDL2 = {
+        gfx = (<SDL2_gfx>);
+        image = (<SDL2_image>);
+        ttf = (<SDL2_ttf>);
+        mixer = (<SDL2_mixer>);
+      };
+
+      freetype = (<freetype>);
+      pspgl = (<pspgl>);
+      psplibraries = (<psplibraries>);
+      psp-ports = (<psp-ports>);
+      libpspvram = (<libpspvram>);
+    };
     toolchain = {
       pspsdk = (<pspsdk>);
       insight = (<insight>);

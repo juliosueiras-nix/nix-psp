@@ -1,14 +1,8 @@
-{ stdenv, fetchFromGitHub, pspsdk, ... }:
+{ src, stdenv, fetchFromGitHub, pspsdk, ... }:
 
 stdenv.mkDerivation {
   name = "libpspvram";
-
-  src = fetchFromGitHub {
-    repo = "libpspvram";
-    owner = "pspdev";
-    rev = "5b6fabfc6e2804473ad77521e1521d50f609c78b";
-    sha256 = "kMMcbf1Z6qYNnENrrD8CYmjUTM5j3d+aXhvFnNI2in0=";
-  };
+  inherit src;
 
   buildInputs = [ pspsdk ];
 
