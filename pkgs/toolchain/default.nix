@@ -113,7 +113,7 @@ in rec {
 
       ebootsigner = callPackage ./ebootsigner/default.nix { 
         inherit pspsdk;
-        src = if impureMode then srcs.toolchain.ebootsigner else fetchGit {
+        src = if impureMode then srcs.toolchain.ebootsigner else fetchFromGitHub {
           repo = "ebootsigner";
           owner = "pspdev";
           rev = "e32f268f17e10a9421b96211b5ee076dc976caa4";
