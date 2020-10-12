@@ -26,7 +26,7 @@ in {
   samples = import ./pkgs/samples/all-packages.nix {
     inherit (pkgs) callPackage lib runCommand;
     inherit toolchain;
-    pspsdkSrc = if impureMode then srcs.toolchain.pspsdk else fetchFromGitHub {
+    pspsdkSrc = if impureMode then srcs.toolchain.pspsdk else pkgs.fetchFromGitHub {
       repo = "pspsdk";
       owner = "pspdev";
       rev = "b80410f008f185e73d166d304eb3c3942e1d1d61";
