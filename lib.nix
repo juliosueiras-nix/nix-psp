@@ -1,10 +1,9 @@
 { pkgs }:
-{ srcs ? null, rustChannel ? pkgs.rustChannelOf {
-  channel = "nightly";
-  date = "2020-10-07";
-  sha256 = "juFd+PkbbaM8ULbmgz+W/F336Lis1MNuC8eDYsEqv0A=";
-}, impureMode ? false, newlibVersion ? "1.20.0", allowCFWSDK ? false, ... }:
+{ srcs ? null, rust ? { channel = "nightly"; date = "2020-10-07"; sha256 = "juFd+PkbbaM8ULbmgz+W/F336Lis1MNuC8eDYsEqv0A="; }, impureMode ? false, newlibVersion ? "1.20.0", allowCFWSDK ? false, ... }:
 let
+  rustChannel = pkgs.rustChannelOf {
+    inherit (rust) channel date sha256;
+  };
   toolchain = import ./pkgs/toolchain/default.nix {
     inherit (pkgs) callPackage fetchFromGitHub;
     inherit newlibVersion impureMode srcs;
