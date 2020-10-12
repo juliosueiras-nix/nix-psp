@@ -15,17 +15,17 @@ in {
   inherit toolchain pspsdk libraries;
   homebrew = import ./pkgs/homebrew/all-packages.nix {
     inherit (pkgs) callPackage;
-    inherit pspsdk libraries impureMode srcs;
+    inherit pspsdk libraries;
   };
 
   plugins = import ./pkgs/plugins/all-packages.nix {
     inherit (pkgs) callPackage lib;
-    inherit pspsdk libraries allowCFWSDK impureMode srcs;
+    inherit pspsdk libraries allowCFWSDK;
   };
 
   samples = import ./pkgs/samples/all-packages.nix {
     inherit (pkgs) callPackage lib runCommand;
-    inherit toolchain impureMode srcs;
+    inherit toolchain;
   };
 
   #testingRustPSP = let

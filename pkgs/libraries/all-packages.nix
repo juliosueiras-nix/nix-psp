@@ -1,4 +1,4 @@
-{ lib, callPackage, allowCFWSDK, newlibVersion, toolchain, ... }:
+{ srcs, impureMode, lib, callPackage, allowCFWSDK, newlibVersion, toolchain, ... }:
 
 let
   buildLibrary = name:
