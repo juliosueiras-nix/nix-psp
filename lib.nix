@@ -26,6 +26,7 @@ in {
   samples = import ./pkgs/samples/all-packages.nix {
     inherit (pkgs) callPackage lib runCommand;
     inherit toolchain;
+    pspsdkSrc = if impureMode then srcs.toolchain.pspsdk else toolchain.pspsdkSrc;
   };
 
   #testingRustPSP = let
