@@ -49,7 +49,7 @@ in rustPlatform.buildRustPackage {
     src = fetchTree {
       type = "git";
       url = "https://github.com/overdrivenpotato/rust-psp";
-      rev = "20a0a73eccb26c80950a623eef11ef7ffd4630bb";
+      rev = "770a9df4a6b71715031f0630f5849ef80bd941c7";
     };
 
     postPatch = ''

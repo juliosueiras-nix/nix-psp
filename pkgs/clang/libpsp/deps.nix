@@ -3,14 +3,16 @@
 {
   cargo-psp = rustPlatform.buildRustPackage {
     pname = "cargo-psp";
-    version = "0.0.1";
+    version = "0.1.1";
 
-    cargoSha256 = "KWdTQEnVSL+0Ff7M1aUM5sZ0MH15qrV9VVJOt2BWQJE=";
+    cargoSha256 = "WYh80lt3VM/2t9h3OOAKNSqpe5XHBP56qVNOh3/coic=";
+
+    checkPhase = "true";
 
     src = fetchCrate {
       crateName = "cargo-psp";
-      version = "0.0.1";
-      sha256 = "B3xme7kVhhz02WuF0VXeFETJD05AFsniNvfH3iFq2S0=";
+      version = "0.1.1";
+      sha256 = "yHDaSpLf72kGo4ItIEvi0wAq3vg7dBuFFTGa9R7MWxU=";
     };
   };
 

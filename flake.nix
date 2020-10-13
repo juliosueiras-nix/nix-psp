@@ -30,14 +30,8 @@
         };
       };
 
-      devShell.x86_64-linux = let
-        toolchain = self.createPSPSDK {
-          allowCFWSDK = true;
-        };
-      in pkgs.mkShell {
-        XARGO_RUST_SRC = "${toolchain.testingRustPSP.rustSrc}/lib/rustlib/src/rust/library";
-        
-        buildInputs = [ toolchain.testingRustPSP.rustSrc toolchain.testingRustPSP.cargo-psp toolchain.testingRustPSP.xargo pkgs.carnix];
+      devShell.x86_64-linux = pkgs.mkShell {
+        buildInputs = [ pkgs.clang pkgs.autoconf pkgs.automake];
       };
     };
 }
