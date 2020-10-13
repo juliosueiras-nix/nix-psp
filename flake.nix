@@ -30,8 +30,12 @@
         };
       };
 
-      devShell.x86_64-linux = pkgs.mkShell {
-        buildInputs = [ pkgs.clang pkgs.autoconf pkgs.automake];
+      devShell.x86_64-linux = let
+        toolchain = self.createPSPSDK {
+          allowCFWSDK = true;
+        };
+      in pkgs.mkShell {
+        buildInputs = [ pkgs.llvmPackages_10.llvm pkgs.llvmPackages_10.clang pkgs.clang pkgs.autoconf pkgs.automake toolchain.clang.cargo-psp];
       };
     };
 }

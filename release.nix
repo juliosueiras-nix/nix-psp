@@ -12,7 +12,10 @@ let
   srcs = {
     clang = {
       rust-psp = (<rust-psp>);
+      pspsdk = (<clang-pspsdk>);
+      newlib = (<clang-newlib>);
     };
+
     libraries = {
       SDL = {
         gfx = (<SDL_gfx>);
