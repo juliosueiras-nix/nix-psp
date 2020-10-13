@@ -38,7 +38,7 @@ in {
   };
 
   clang = import ./pkgs/clang {
-    inherit (pkgs) callPackage lib runCommand makeRustPlatform writeText applyPatches;
+    inherit (pkgs) callPackage lib runCommand makeRustPlatform writeText fetchCrate applyPatches;
     inherit impureMode srcs rustChannel;
   };
 }

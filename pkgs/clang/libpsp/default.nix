@@ -8,7 +8,6 @@ in rustPlatform.buildRustPackage {
   name = "libpsp";
 
   buildInputs = [
-    deps.cargo-psp
     deps.xargo
   ];
 

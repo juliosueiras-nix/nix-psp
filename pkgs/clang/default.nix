@@ -1,4 +1,4 @@
-{ callPackage, lib, writeText, applyPatches, makeRustPlatform, impureMode, srcs, rustChannel, ... }:
+{ callPackage, fetchCrate, lib, writeText, applyPatches, makeRustPlatform, impureMode, srcs, rustChannel, ... }:
 
 let 
   rustPlatform = makeRustPlatform {
@@ -49,4 +49,20 @@ in rec {
   } else callPackage ./libpsp {
     inherit srcCargoDeps xargo-toml rustPlatform;
   };
+
+  cargo-psp = rustPlatform.buildRustPackage {
+    pname = "cargo-psp";
+    version = "0.1.1";
+
+    cargoSha256 = "WYh80lt3VM/2t9h3OOAKNSqpe5XHBP56qVNOh3/coic=";
+
+    checkPhase = "true";
+
+    src = fetchCrate {
+      crateName = "cargo-psp";
+      version = "0.1.1";
+      sha256 = "yHDaSpLf72kGo4ItIEvi0wAq3vg7dBuFFTGa9R7MWxU=";
+    };
+  };
+
 }

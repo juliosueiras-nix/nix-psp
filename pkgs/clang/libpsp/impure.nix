@@ -8,7 +8,6 @@ in stdenv.mkDerivation {
   name = "libpsp";
 
   buildInputs = [
-    deps.cargo-psp
     deps.xargo
     rustPlatform.rust.rustc
     rustPlatform.rust.cargo
