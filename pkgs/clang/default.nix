@@ -91,8 +91,18 @@ in rec {
     };
   };
 
-  pspsdkWithLLVM = symlinkJoin {
-    name = "pspsdk-llvm-env";
+  libcxx = callPackage ./libcxx {
+    pspsdk = pspsdkFull;
+  };
+
+  cmakePSP = callPackage ./cmake.nix {};
+
+  pthreads-emb = callPackage ./pthreads-emb {
+    pspsdk = pspsdkWithLLVM;
+  };
+
+  pspsdkFull = symlinkJoin {
+    name = "pspsdk-clang-full-env";
     postBuild = ''
       cp $out/psp/sdk/lib/clang.conf cur.clang.conf
       unlink $out/psp/sdk/lib/clang.conf
@@ -100,6 +110,25 @@ in rec {
       substituteInPlace $out/psp/sdk/lib/clang.conf --replace '$(out)' "$out"
     '';
     paths = [ 
+      pthreads-emb
+      cmakePSP
+      cargo-psp
+      libpsp
+      pspsdk
+    ];
+  };
+
+  pspsdkWithLLVM = symlinkJoin {
+    name = "pspsdk-llvm-env";
+    postBuild = ''
+      cp $out/psp/sdk/lib/clang.conf cur.clang.conf
+      unlink $out/psp/sdk/lib/clang.conf
+      mv cur.clang.conf $out/psp/sdk/lib/clang.conf
+      substituteInPlace $out/psp/sdk/lib/clang.conf --replace '$(out)' "$out"
+    '';
+
+    paths = [ 
+      cmakePSP
       cargo-psp
       libpsp
       pspsdk
