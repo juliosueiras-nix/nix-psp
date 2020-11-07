@@ -117,6 +117,7 @@ let
 
     thirdparty = import ./thirdparty/all-packages.nix {
       inherit toolchain callPackage allowCFWSDK;
+      libraries = mainLibraries;
     };
   });
 in lib.mergeAttrs mainLibraries (if newlibVersion != "3.3.0" then rec {

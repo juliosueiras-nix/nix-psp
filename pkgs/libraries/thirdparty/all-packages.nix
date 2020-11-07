@@ -1,4 +1,4 @@
-{ callPackage, toolchain, ... }:
+{ callPackage, toolchain, libraries, ... }:
 
 let
   buildLibrary = name:
@@ -12,4 +12,7 @@ let
 
 in {
   cfwSDK = buildLibrary "cfwSDK" {};
+  oslibmodv2 = buildLibrary "oslibmodv2" {
+    libraries = [ libraries.jpeg ];
+  };
 }
