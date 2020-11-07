@@ -19,7 +19,6 @@ in {
 
   vnpsp = buildHomebrew ./vnpsp {
     libraries = [
-      libraries.thirdparty.oslibmodv2
       libraries.jpeg
       libraries.zlib
       libraries.libpng
